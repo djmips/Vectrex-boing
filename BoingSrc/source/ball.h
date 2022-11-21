@@ -11,29 +11,6 @@
 #define SPRITE_SIZE 25
 #define MAX_ANIM 1
 
-// const signed char ball0[] = {
-//                             15,
-//                             -2 * SPRITE_SIZE,  0 * SPRITE_SIZE,
-//                             -2 * SPRITE_SIZE,  1 * SPRITE_SIZE,
-//                             -1 * SPRITE_SIZE,  1 * SPRITE_SIZE,
-//                             -1 * SPRITE_SIZE,  2 * SPRITE_SIZE,
-//                              0 * SPRITE_SIZE,  2 * SPRITE_SIZE,
-
-//                              1 * SPRITE_SIZE,  2 * SPRITE_SIZE,
-//                              1 * SPRITE_SIZE,  1 * SPRITE_SIZE,
-//                              2 * SPRITE_SIZE,  1 * SPRITE_SIZE,
-
-//                              2 * SPRITE_SIZE,  0 * SPRITE_SIZE,
-//                              2 * SPRITE_SIZE, -1 * SPRITE_SIZE,
-//                              1 * SPRITE_SIZE, -1 * SPRITE_SIZE,
-//                              1 * SPRITE_SIZE, -2 * SPRITE_SIZE,
-
-//                              0 * SPRITE_SIZE, -2 * SPRITE_SIZE,
-//                             -1 * SPRITE_SIZE, -2 * SPRITE_SIZE,
-//                             -1 * SPRITE_SIZE, -1 * SPRITE_SIZE,
-//                             -2 * SPRITE_SIZE, -1 * SPRITE_SIZE,
-//                            };
-
 const signed char ball0[] = {
                             15,
 -15, 95,

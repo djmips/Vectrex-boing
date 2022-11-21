@@ -104,8 +104,8 @@ int main(void)
     //Print_Str_d(100,-128, "JOYSTICK 1 TO MOVE BALL!\x80"); /* a message! */
 
     Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;      /* set scale factor for the sprite */
-    Moveto_d(100, 0);      /* position ball */
     //Draw_VLc((void*)(ball[anim_state])); /* draw the current ball */
     Draw_VLc((void*)ball0);
     //Reset0Ref();
@@ -147,7 +147,7 @@ int main(void)
       xs = -xs;
     }
 
-    if (ball_x<=-110) 
+    if (ball_x<=-80) 
     {
       ball_x = ball_x - xs;
       xs = -xs;
