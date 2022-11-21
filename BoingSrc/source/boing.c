@@ -14,6 +14,9 @@
 #define MAX_SCALE (0xf0)
 #define MOVE_SCALE 0x90
 
+#define EDGE 45
+#define BOT 100
+
 /*
  * For variable variables ALLWAYS leave them uninitialized, this way
  * the compiler puts them into the BSS ram section in vectrex ram
@@ -141,24 +144,24 @@ int main(void)
     ball_y = ball_y + n;
 
 
-    if (ball_x>=80)
+    if (ball_x>=EDGE)
     { 
       ball_x = ball_x - xs;
       xs = -xs;
     }
 
-    if (ball_x<=-80) 
+    if (ball_x<=-EDGE) 
     {
       ball_x = ball_x - xs;
       xs = -xs;
     } 
 
 
-    if (ball_y>=100) ball_y = 100;
+    if (ball_y>=BOT) ball_y = BOT;
 
-    if (ball_y<=-100) 
+    if (ball_y<=-BOT) 
     {
-      ball_y = -100;
+      ball_y = -BOT;
       whole = 127;
       n = 4;
     }
