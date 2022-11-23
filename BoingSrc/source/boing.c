@@ -107,6 +107,7 @@ int main(void)
     //Print_Str_d(100,-128, "JOYSTICK 1 TO MOVE BALL!\x80"); /* a message! */
 
     Reset0Ref();
+    VIA_t1_cnt_lo = _SCALE;      /* set scale factor for the sprite */
     Moveto_d((ball_y + 50), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;      /* set scale factor for the sprite */
     //Draw_VLc((void*)(ball[anim_state])); /* draw the current ball */
@@ -115,8 +116,32 @@ int main(void)
     //Moveto_d(0, 0);
     //Draw_VLc((void*)seg0);
     Reset0Ref();
-    Moveto_d(0, 0);
-    //Draw_VLc((void*)seg0);
+    //VIA_t1_cnt_lo = _SCALE;      /* set scale factor for the sprite */
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    //VIA_t1_cnt_lo = _SCALE;      /* set scale factor for the sprite */
+    Draw_VLc((void*)seg0);
+
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg1);
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg2);
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg3);
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg4);
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg5);
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg6);
+    Reset0Ref();
+    Moveto_d((ball_y + 50), ball_x);      /* position ball */
+    Draw_VLc((void*)seg7);
 
     anim_state++;                     /* next time the next animation */
     if (anim_state == MAX_ANIM)       /* could do a % MAXANIM, but this is */
