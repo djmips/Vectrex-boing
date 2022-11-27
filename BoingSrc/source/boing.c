@@ -114,6 +114,13 @@ int main(void)
     Moveto_d((ball_y + YADD), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)ball0);
+
+
+    Reset0Ref();
+    VIA_t1_cnt_lo = MOVE_SCALE;
+    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    VIA_t1_cnt_lo = _SCALE;
+    Draw_VLc((void*)seg0);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
     Moveto_d((ball_y + YADD), ball_x);      /* position ball */
@@ -144,6 +151,7 @@ int main(void)
     Moveto_d((ball_y + YADD), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg6);
+
 
     anim_state++;                     /* next time the next animation */
     if (anim_state == MAX_ANIM)       /* could do a % MAXANIM, but this is */
