@@ -46,9 +46,9 @@ unsigned char *current_song;
 static inline void start_one_vectrex_round(void)
 {
   DP_to_C8();                        /* vectrex internal... dp must point */
-  Init_Music_chk(current_song);    /* to c800, could make a function which */
+  //Init_Music_chk(current_song);    /* to c800, could make a function which */
   Wait_Recal();                       /* sets this up allright... */
-  Do_Sound();
+  //Do_Sound();
 }
 
 /*
@@ -88,12 +88,14 @@ int main(void)
   const signed char frac = 10;
   signed char ball_x;               /* where is the ball? */
   signed char ball_y;
+  signed char ball_y_move;
   signed char n;  
   signed char xs;
 
   whole = 127;
   ball_x = 0;
-  ball_y = 60;
+  ball_y = 10;
+  ball_y_move = 0;
   n = -2;
   xs = -1;
   anim_state = 0;
@@ -109,72 +111,122 @@ int main(void)
     //Draw_VLc((void*)(ball[anim_state])); /* draw the current ball */
     #define YADD 80
 
+    ball_y_move = (ball_y +  YADD);
+
+    //ball_y_move = YADD; //(ball_y +  YADD);
+    //ball_x = 0;
+
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)ball0);
 
 
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg0);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg1);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg2);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg3);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg4);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg5);
     Reset0Ref();
     VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y + YADD), ball_x);      /* position ball */
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
     VIA_t1_cnt_lo = _SCALE;
     Draw_VLc((void*)seg6);
+
+
+    Reset0Ref();
+    VIA_t1_cnt_lo = MOVE_SCALE;
+    Moveto_d((ball_y_move), ball_x);      /* position ball */
+    
+    //Moveto_d(-7, 45);      /* position ball */
+    //Draw_VLc((void*)latSeg0);
+    Moveto_d(-45, -53);      /* position ball */
+    VIA_t1_cnt_lo = 60;
+    Draw_VLc((void*)latSeg3);
+
+    // Reset0Ref();
+    // VIA_t1_cnt_lo = MOVE_SCALE;
+    // Moveto_d((ball_y_move), ball_x);      /* position ball */
+    // VIA_t1_cnt_lo = _SCALE;
+    // Draw_VLc((void*)latSeg1);
+    // Reset0Ref();
+    // VIA_t1_cnt_lo = MOVE_SCALE;
+    // Moveto_d((ball_y_move), ball_x);      /* position ball */
+    // VIA_t1_cnt_lo = _SCALE;
+    // Draw_VLc((void*)latSeg2);
+    // Reset0Ref();
+    // VIA_t1_cnt_lo = MOVE_SCALE;
+    // Moveto_d((ball_y_move), ball_x);      /* position ball */
+    // VIA_t1_cnt_lo = _SCALE;
+    // Draw_VLc((void*)latSeg3);
+    // Reset0Ref();
+    // VIA_t1_cnt_lo = MOVE_SCALE;
+    // Moveto_d((ball_y_move), ball_x);      /* position ball */
+    // VIA_t1_cnt_lo = _SCALE;
+    // Draw_VLc((void*)latSeg4);
+    // Reset0Ref();
+    // VIA_t1_cnt_lo = MOVE_SCALE;
+    // Moveto_d((ball_y_move), ball_x);      /* position ball */
+    // VIA_t1_cnt_lo = _SCALE;
+    // Draw_VLc((void*)latSeg5);
+    // Reset0Ref();
+    // VIA_t1_cnt_lo = MOVE_SCALE;
+    // Moveto_d((ball_y_move), ball_x);      /* position ball */
+    // VIA_t1_cnt_lo = _SCALE;
+    // Draw_VLc((void*)latSeg6);
 
 
     anim_state++;                     /* next time the next animation */
     if (anim_state == MAX_ANIM)       /* could do a % MAXANIM, but this is */
        anim_state = 0;                /* more optimized */
-    if (!Vec_Music_Flag)    /* music finished? */
-       play_song((void*)&Vec_Music_4);     /* if so ... restart */
-    if (joystick_1_x()>0)                /* check the joystick and */
-    {                                 /* update position */
-      ball_x++;
-    }
-    else if (joystick_1_x()<0)
-    {
-      ball_x--;
-    }
-    if (joystick_1_y()>0)
-    {
-      ball_y++;
-    }
-    else if (joystick_1_y()<0)
-    {
-      ball_y--;
-    }
 
+    // if (!Vec_Music_Flag)    /* music finished? */
+    //    play_song((void*)&Vec_Music_4);     /* if so ... restart */
+
+    // if (joystick_1_x()>0)                /* check the joystick and */
+    // {                                 /* update position */
+    //   ball_x++;
+    // }
+    // else if (joystick_1_x()<0)
+    // {
+    //   ball_x--;
+    // }
+    // if (joystick_1_y()>0)
+    // {
+    //   ball_y++;
+    // }
+    // else if (joystick_1_y()<0)
+    // {
+    //   ball_y--;
+    // }
+
+#if 1
     ball_x = ball_x + xs;
     ball_y = ball_y + n;
 
@@ -207,6 +259,7 @@ int main(void)
         whole = whole + 127;
         n = n - 1;
     }
+#endif
 
     Joy_Digital();                        /* call once per round, to insure */
   } /* while (1) */                    /* joystick information is up to date */

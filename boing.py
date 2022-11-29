@@ -30,6 +30,40 @@ def drawCircumference():
         x1 = x2
         y1 = y2
 
+def drawLatitude():
+
+    latSeg = 0
+
+    for longDeg in np.arange(sLong, 180.0, sLong ):
+
+        print ("const signed char latSeg" + str(latSeg) + "[] = {")
+
+        x1 = 0
+        y1 = radius
+
+        x2 = sin(longDeg) * radius
+        y2 = cos(longDeg) * radius
+
+        dx = (x2 - x1)
+        dy = (y2 - y1)
+
+        print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
+
+        x1 = -x2
+        y1 = y2
+
+        dx = (x2 - x1)
+        dy = (y2 - y1)
+
+        print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
+
+        #line(x1,y1, -x1,y1)
+
+        print ("};")
+        latSeg = latSeg + 1
+
+
+
 def drawLongitude():
 
     #latDeg = 0
@@ -65,5 +99,6 @@ def drawLongitude():
 
 
 
-#drawCircumference()
+drawCircumference()
 drawLongitude()
+drawLatitude()
