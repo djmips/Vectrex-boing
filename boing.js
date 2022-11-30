@@ -2,13 +2,16 @@ var sDiv = 8;
 var sLat = (180/sDiv);
 var sLong = (180/sDiv);
 var radius = 90;
-var bx = 209;
-var by = 173.4;
+var bx = 204;
+var by = 171.3;
 var n = 3.8;
 var dn = 0.16;
 var xs = 1.5;
 var lpf = 0;
 var tlen = 0;
+
+
+var circleTab = [];
 
 var zbuffer;
 
@@ -22,8 +25,8 @@ var pic = createGraphics(400, 400, JAVA2D);
 //var dot = function(a, b) {  return a.x * b.x + a.y * b.y;};
 //var hypot2 = function(a, b) { return dot(sub(a, b), sub(a, b));};
     
-var v1 = new PVector(40, 20);
-var v2 = new PVector(25, 50);     
+//var v1 = new PVector(40, 20);
+//var v2 = new PVector(25, 50);     
 
 //PVector.multiply = function(a, b) {
 //	if (b instanceof PVector){
@@ -40,10 +43,10 @@ var perpdot = function(a, b) {
 
 //v1.mult(v2);
 
-var dd = v1.dot(v2);
+//var dd = v1.dot(v2);
 
-debug(dd);
-debug(v1.z);
+//debug(dd);
+//debug(v1.z);
     
 var ipoint = function(x,y,debug)
 {
@@ -152,57 +155,141 @@ var lineCircleCollision = function(circlePos, radius, line1, line2) {
     return l2.dot(l2) <= sq(radius);
 };
 
+
+
+
+var fillCircleTable = function(x1, y1, x2, y2)
+{
+    var x = Math.trunc(x1);
+    var y = Math.trunc(y1);
+    x2 = Math.trunc(x2);
+    y2 = Math.trunc(y2);
+
+    var dx = abs(x-x2);
+    var dy = abs(y-y2);
+
+    var hy = dy;
+    var hx = dx;
+    var ddy = 0;
+    var ddx = 0;
+    var ix = 1;
+    var iy = 1;
+    
+    if (x1 > x2){
+        ix = -1;
+    }
+
+    if (y1 > y2){
+        iy = -1;
+    }
+
+    if (dy > dx)
+    {
+        while(hy)
+        {
+            point(x, y);
+            circleTab[y] = x;
+            ddy = ddy - dx;
+    
+            if (ddy < 0){
+                x = x + ix;
+                ddy = ddy + dy;
+            }    
+            y = y + iy;
+            hy = hy  - 1;
+        }
+    } else {
+
+        while(hx)
+        {
+            point(x, y);
+            circleTab[y] = x;
+            
+            ddx = ddx - dy;
+    
+            if (ddx < 0){
+                y = y + iy;
+                ddx = ddx + dx;
+            }    
+            x = x + ix;
+            hx = hx - 1;
+        }        
+    }    
+};
+
+
+var createCircleTable = function() {
+
+    //stroke(40, 186, 7);
+    //translate(200,200);
+    
+    var x1 = 0;
+    var y1 = radius;
+    
+    for (var deg = 0; deg < 90; deg += sLong)
+    {
+        var x2 = sin(deg + sLong) * radius;
+        var y2 = cos(deg + sLong) * radius;
+
+        fillCircleTable(x1, y1, x2,y2);
+        line(x1, y1, x2,y2);
+
+        x1 = x2;
+        y1 = y2;
+    }
+    
+    // HACK
+    circleTab[0]=90;
+};
+
+
 var drawGrid = function(size) {
 
-    stroke(123, 4, 214);
-    
+    translate (30,30);
     var cx = bx-30;
-    var cy = by-31;
+    var cy = by-30; 
     
-    //ellipse (cx,cy,radius*2,radius*2);
-
-
     stroke(0, 176, 62);
 
     var t;
     var cpos = new PVector(cx,cy);
-    var l1start = new PVector(0,0);
-    var l1end = new PVector(0,size);
+
+    // Vertical lines
     
     for (var vlines = 0, xpos = 0; vlines < 8; vlines++) {
-        l1start.x = xpos;
-        l1end.x = xpos;
 
         if (xpos < (cpos.x-radius) || xpos > (cpos.x + radius)) {
             line(xpos, 0, xpos, size);
         }
         else
         {
-            line (xpos, 0, xpos, max(cy-radius,0));
-            line (xpos, min(cy+radius,size), xpos,size);
+            var bspacex = cx - xpos;
+            var index = floor(abs(bspacex));
+            var circleY = circleTab[index];
+            line (xpos, 0, xpos, max(cy-circleY,0));
+            line (xpos, min(circleY+cy,size), xpos, size);
         }
-        
         xpos+=(size/7);
     }
     
-    for (var vlines = 0, xpos = 0; vlines < 8; vlines++) {
-        line(xpos, size, xpos*1.05-8, size+8);
-        xpos+=(size/7);
-    } 
-    
-    l1start.set(0,0);
-    l1end.set(size,0);
-    
+    //for (var vlines = 0, xpos = 0; vlines < 8; vlines++) {
+        //line(xpos, size, xpos*1.05-8, size+8);
+        //xpos+=(size/7);
+    //} 
+
+    // Horizontal lines    
+
     for (var hlines = 0, ypos = 0; hlines < 7; hlines++) {
-        l1start.y = ypos;
-        l1end.y = ypos;
 
         if (ypos < (cpos.y-radius) || ypos > (cpos.y + radius)) {
             line(0, ypos, size, ypos);
         }
         else {
-            line (0, ypos, max(cx-radius,0),ypos);
-            line (min(cx+radius,size), ypos, size,ypos);
+            var bspacey = cy - ypos;
+            var index = floor(abs(bspacey));
+            var circleX = circleTab[index];
+            line (0, ypos, max(cx-circleX,0),ypos);
+            line (min(circleX+cx,size), ypos, size,ypos);
         }
 
         ypos+=(size/6);
@@ -215,25 +302,6 @@ var drawGrid = function(size) {
     //line(-5, ypos, size+6, ypos);
 
 
-};
-
-
-var createCircleTable = function() {
-
-    var x1 = 0;
-    var y1 = radius;
-    
-    for (var deg = 0; deg < 90; deg += sLong)
-    {
-        var x2 = sin(deg + sLong) * radius;
-        var y2 = cos(deg + sLong) * radius;
-
-        drawLine(x1, y1, x2,y2);
-        //line(-x2, y2, -x1,y1);
-
-        x1 = x2;
-        y1 = y2;
-    }
 };
 
 var drawExterior = function() {
@@ -301,6 +369,19 @@ var imagePrep = function(x, y) {
     
 };
 
+//debug("---------NEW RUN----------");
+
+//background(0, 0, 0);
+createCircleTable();
+//debug(circleTab);
+//debug(circleTab[0]);
+//debug(circleTab[90]);
+//for (var xx = 0; xx < 90; xx++) {
+//    debug (circleTab[xx]);
+//}
+
+var draw1 = function() {
+};
 
 var draw = function() {
     
@@ -316,15 +397,10 @@ var draw = function() {
     //pic.loadPixels();
     //zbuffer = pic.imageData.data;
 
-    //stroke(64, 255, 0);
-
-    //translate(30,31);
     strokeWeight(1);    
     drawGrid(342);
 
     resetMatrix();
-
-    createCircleTable();
 
     //point(bx,by);
     stroke(235, 17, 68);
@@ -334,14 +410,14 @@ var draw = function() {
     strokeWeight(2);
 
     translate(bx,by);
-    //rotate(22.5);
+    rotate(22.5);
 
     drawExterior();
     var ani = Math.trunc(bx*1.5%sLat);
     drawBall(ani);
     //println(ani);
     
-    //bx = bx + xs;
+    bx = bx + xs;
     if (bx < 90){
         bx = bx - xs;
         xs = -xs;
@@ -351,7 +427,7 @@ var draw = function() {
         xs = -xs;
     }
     
-    //by = by + n;
+    by = by + n;
     n = n + dn;
     if (by > 310 ){
         n = n - dn;
@@ -365,4 +441,5 @@ var draw = function() {
     
 };
 
+draw1();
 
