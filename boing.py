@@ -75,7 +75,7 @@ def drawLongitude():
     #latDeg = 45
 
         print ("const signed char seg" + str(seg) + "[] = {")
-        print ("6,")
+        print ("7,")
         for deg in np.arange(0.0, (180.001-sLong), sLong):
             # ty = cos(deg+sLat) * radius
             # by = cos(deg) * radius

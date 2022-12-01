@@ -3,6 +3,7 @@
  */
 #include <vectrex.h>
 #include "controller.h"
+#include "drawRoutines.h"
 
 #include "ball.h"
 
@@ -104,102 +105,143 @@ int main(void)
   while (1)                        /* never to return... */
   {
     start_one_vectrex_round();        /* start 'de round */
-    Intensity_a(MAX_BRIGHTNESS);          /* set some brightness */
+    Intensity_a(MAX_BRIGHTNESS/2);          /* set some brightness */
     //VIA_t1_cnt_lo = MAX_SCALE;               /* set scale factor */
     //Print_Str_d(100,-128, "JOYSTICK 1 TO MOVE BALL!\x80"); /* a message! */
 
-    //Draw_VLc((void*)(ball[anim_state])); /* draw the current ball */
+    //cDraw_VLc((void*)(ball[anim_state])); /* draw the current ball */
     #define YADD 80
 
     ball_y_move = (ball_y +  YADD);
 
     //ball_y_move = YADD; //(ball_y +  YADD);
     //ball_x = 0;
-
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)ball0);
-
-
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg0);
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg1);
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg2);
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg3);
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg4);
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg5);
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    VIA_t1_cnt_lo = _SCALE;
-    Draw_VLc((void*)seg6);
+    // DRAW BALL
+    if (1)
+    {
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)ball0);
 
 
-    Reset0Ref();
-    VIA_t1_cnt_lo = MOVE_SCALE;
-    Moveto_d((ball_y_move), ball_x);      /* position ball */
-    
-    //Moveto_d(-7, 45);      /* position ball */
-    //Draw_VLc((void*)latSeg0);
-    Moveto_d(-45, -53);      /* position ball */
-    VIA_t1_cnt_lo = 60;
-    Draw_VLc((void*)latSeg3);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg0);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg1);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg2);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg3);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg4);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg5);
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      VIA_t1_cnt_lo = _SCALE;
+      cDraw_VLc((void*)seg6);
 
-    // Reset0Ref();
-    // VIA_t1_cnt_lo = MOVE_SCALE;
-    // Moveto_d((ball_y_move), ball_x);      /* position ball */
-    // VIA_t1_cnt_lo = _SCALE;
-    // Draw_VLc((void*)latSeg1);
-    // Reset0Ref();
-    // VIA_t1_cnt_lo = MOVE_SCALE;
-    // Moveto_d((ball_y_move), ball_x);      /* position ball */
-    // VIA_t1_cnt_lo = _SCALE;
-    // Draw_VLc((void*)latSeg2);
-    // Reset0Ref();
-    // VIA_t1_cnt_lo = MOVE_SCALE;
-    // Moveto_d((ball_y_move), ball_x);      /* position ball */
-    // VIA_t1_cnt_lo = _SCALE;
-    // Draw_VLc((void*)latSeg3);
-    // Reset0Ref();
-    // VIA_t1_cnt_lo = MOVE_SCALE;
-    // Moveto_d((ball_y_move), ball_x);      /* position ball */
-    // VIA_t1_cnt_lo = _SCALE;
-    // Draw_VLc((void*)latSeg4);
-    // Reset0Ref();
-    // VIA_t1_cnt_lo = MOVE_SCALE;
-    // Moveto_d((ball_y_move), ball_x);      /* position ball */
-    // VIA_t1_cnt_lo = _SCALE;
-    // Draw_VLc((void*)latSeg5);
-    // Reset0Ref();
-    // VIA_t1_cnt_lo = MOVE_SCALE;
-    // Moveto_d((ball_y_move), ball_x);      /* position ball */
-    // VIA_t1_cnt_lo = _SCALE;
-    // Draw_VLc((void*)latSeg6);
+
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d((ball_y_move), ball_x);      /* position ball */
+      
+      Intensity_a(MAX_BRIGHTNESS);
+
+      //Moveto_d(-7, 45);      /* position ball */
+      //cDraw_VLc((void*)latSeg0);
+      //Moveto_d(-45, -53);      /* position ball */
+      VIA_t1_cnt_lo = 120;   // Set scale to 120
+      Moveto_d(-54, -64);      /* position ball */
+      Draw_Line_d(0,127);
+
+
+      //Draw_Line_d(0,127);
+
+      //cDraw_VLc((void*)latSeg3);
+
+      // Reset0Ref();
+      // VIA_t1_cnt_lo = MOVE_SCALE;
+      // Moveto_d((ball_y_move), ball_x);      /* position ball */
+      // VIA_t1_cnt_lo = _SCALE;
+      // cDraw_VLc((void*)latSeg1);
+      // Reset0Ref();
+      // VIA_t1_cnt_lo = MOVE_SCALE;
+      // Moveto_d((ball_y_move), ball_x);      /* position ball */
+      // VIA_t1_cnt_lo = _SCALE;
+      // cDraw_VLc((void*)latSeg2);
+      // Reset0Ref();
+      // VIA_t1_cnt_lo = MOVE_SCALE;
+      // Moveto_d((ball_y_move), ball_x);      /* position ball */
+      // VIA_t1_cnt_lo = _SCALE;
+      // cDraw_VLc((void*)latSeg3);
+      // Reset0Ref();
+      // VIA_t1_cnt_lo = MOVE_SCALE;
+      // Moveto_d((ball_y_move), ball_x);      /* position ball */
+      // VIA_t1_cnt_lo = _SCALE;
+      // cDraw_VLc((void*)latSeg4);
+      // Reset0Ref();
+      // VIA_t1_cnt_lo = MOVE_SCALE;
+      // Moveto_d((ball_y_move), ball_x);      /* position ball */
+      // VIA_t1_cnt_lo = _SCALE;
+      // cDraw_VLc((void*)latSeg5);
+      // Reset0Ref();
+      // VIA_t1_cnt_lo = MOVE_SCALE;
+      // Moveto_d((ball_y_move), ball_x);      /* position ball */
+      // VIA_t1_cnt_lo = _SCALE;
+      // cDraw_VLc((void*)latSeg6);
+    }
+
+    {
+
+      Intensity_a(MAX_BRIGHTNESS);
+
+      Reset0Ref();
+      VIA_t1_cnt_lo = MOVE_SCALE;
+      Moveto_d(90, -108);
+      //Moveto_d(-7, 45);
+      //cDraw_VLc((void*)latSeg0);
+      //Moveto_d(-45, -53);
+      VIA_t1_cnt_lo = 248;  // scale
+      //Moveto_d(-54, -64);
+      Draw_Line_d(0,127);
+      Moveto_d(-18, 0);
+      Draw_Line_d(0,-127);
+
+      Moveto_d(-18, 0);
+      Draw_Line_d(0,127);
+      Moveto_d(-18, 0);
+      Draw_Line_d(0,-127);
+
+      Moveto_d(-18, 0);
+      Draw_Line_d(0,127);
+      Moveto_d(-18, 0);
+      Draw_Line_d(0,-127);
+
+      Moveto_d(-18, 0);
+      Draw_Line_d(0,127);
+    }
 
 
     anim_state++;                     /* next time the next animation */

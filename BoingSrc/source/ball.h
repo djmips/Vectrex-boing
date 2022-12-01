@@ -32,7 +32,7 @@ const signed char ball0[] = {
 };
 
 const signed char seg0[] = {
-6,
+7,
 -15, 84,
 -43, 71,
 -64, 48,
@@ -43,7 +43,7 @@ const signed char seg0[] = {
 -15, -84,
 };
 const signed char seg1[] = {
-6,
+7,
 -15, 64,
 -43, 55,
 -64, 36,
@@ -54,7 +54,7 @@ const signed char seg1[] = {
 -15, -64,
 };
 const signed char seg2[] = {
-6,
+7,
 -15, 35,
 -43, 29,
 -64, 19,
@@ -65,7 +65,7 @@ const signed char seg2[] = {
 -15, -35,
 };
 const signed char seg3[] = {
-6,
+7,
 -15, 0,
 -43, 0,
 -64, 0,
@@ -76,7 +76,7 @@ const signed char seg3[] = {
 -15, 0,
 };
 const signed char seg4[] = {
-6,
+7,
 -15, -35,
 -43, -29,
 -64, -19,
@@ -87,7 +87,7 @@ const signed char seg4[] = {
 -15, 35,
 };
 const signed char seg5[] = {
-6,
+7,
 -15, -64,
 -43, -55,
 -64, -36,
@@ -98,7 +98,7 @@ const signed char seg5[] = {
 -15, 64,
 };
 const signed char seg6[] = {
-6,
+7,
 -15, -84,
 -43, -71,
 -64, -48,
@@ -124,7 +124,7 @@ const signed char latSeg0[] = {
 // };
 const signed char latSeg3[] = {
 // -200, 240,
- 1,
+ 0,
  0, 127,
  0, 120,
  };
