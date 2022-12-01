@@ -84,7 +84,7 @@ void setup(void)
  */
 int main(void)
 {
-  unsigned char anim_state;           /* our animation state counter */
+  signed char anim_state;           /* our animation state counter */
   signed char whole;
   const signed char frac = 10;
   signed char ball_x;               /* where is the ball? */
@@ -125,7 +125,7 @@ int main(void)
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
         VIA_t1_cnt_lo = _SCALE;
-        cDraw_VLc((void*)ball0);
+        cDraw_VLc((void*)ball);
       }
 
       if (1)
@@ -134,7 +134,7 @@ int main(void)
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
         VIA_t1_cnt_lo = _SCALE;
-        cDraw_VLc((void*)long0);
+        cDraw_VLc((void*)(anim[anim_state]));
       }
 
 
@@ -211,11 +211,6 @@ int main(void)
 
     }
 
-
-    anim_state++;                     /* next time the next animation */
-    if (anim_state == MAX_ANIM)       /* could do a % MAXANIM, but this is */
-       anim_state = 0;                /* more optimized */
-
     // if (!Vec_Music_Flag)    /* music finished? */
     //    play_song((void*)&Vec_Music_4);     /* if so ... restart */
 
@@ -268,6 +263,23 @@ int main(void)
         whole = whole + 127;
         n = n - 1;
     }
+
+
+    if (xs > 0)
+    {
+      anim_state++;
+    }
+    else
+    {
+       anim_state--;
+    }
+
+    if (anim_state >= MAX_ANIM)
+        anim_state = 0;
+
+    if (anim_state < 0)
+        anim_state = MAX_ANIM-1;
+
 
     Joy_Digital();                        /* call once per round, to insure */
   } /* while (1) */                    /* joystick information is up to date */

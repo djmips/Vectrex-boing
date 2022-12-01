@@ -62,39 +62,36 @@ def drawLatitude():
         print ("};")
         latSeg = latSeg + 1
 
-
-
 def drawLongitude():
 
     #latDeg = 0
     seg = 0
 
-    print ("const signed char long" + str(seg) + "[] = {")
-    print ("55,")
+    for ani in range(0, 22, 2):
 
-    negF = 1
+        print ("const signed char long" + str(seg) + "[] = {")
+        print ("55,")
 
-    for latDeg in np.arange(sLat, 180.0, sLat ):
-    #for latDeg in np.arange(12.0, 13.0, sLat ):
+        negF = 1
 
-        #latDeg = 45
+        for latDeg in np.arange((ani + (sLat/2)), (180.0 - sLat/2), sLat ):
 
-        for deg in np.arange(0.0, (180.001-sLong), sLong):
-            x1 = cos(latDeg) * (radius * sin(deg))
-            y1 = cos(deg) * radius
-            
-            x2 = cos(latDeg) * (radius * sin(deg + sLong))
-            y2 = cos(deg+sLat) * radius
+            for deg in np.arange(0.0, (180.001-sLong), sLong):
+                x1 = cos(latDeg) * (radius * sin(deg))
+                y1 = cos(deg) * radius
+                
+                x2 = cos(latDeg) * (radius * sin(deg + sLong))
+                y2 = cos(deg+sLat) * radius
 
-            dx = (x2 - x1)
-            dy = (y2 - y1)
+                dx = (x2 - x1)
+                dy = (y2 - y1)
 
-            print(str(int(dy * negF)) +  ",", str(int(dx * aspectConst)) + "," )
+                print(str(int(dy * negF)) +  ",", str(int(dx * aspectConst)) + "," )
 
-        negF = -negF
+            negF = -negF
 
-    seg = seg + 1
-    print ("};")
+        seg = seg + 1
+        print ("};")
 
 
 
