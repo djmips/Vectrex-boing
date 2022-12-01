@@ -167,7 +167,7 @@ int main(void)
       VIA_t1_cnt_lo = MOVE_SCALE;
       Moveto_d((ball_y_move), ball_x);      /* position ball */
       
-      Intensity_a(MAX_BRIGHTNESS);
+      Intensity_a(0x4F);
 
       //Moveto_d(-7, 45);      /* position ball */
       //cDraw_VLc((void*)latSeg0);
@@ -215,7 +215,7 @@ int main(void)
 
     {
 
-      Intensity_a(MAX_BRIGHTNESS);
+      Intensity_a(0x34);
 
       Reset0Ref();
       VIA_t1_cnt_lo = MOVE_SCALE;
@@ -226,21 +226,50 @@ int main(void)
       VIA_t1_cnt_lo = 248;  // scale
       //Moveto_d(-54, -64);
       Draw_Line_d(0,127);
-      Moveto_d(-18, 0);
+
+#define STEPY -18
+
+      Moveto_d(STEPY, 0);
       Draw_Line_d(0,-127);
 
-      Moveto_d(-18, 0);
+      Moveto_d(STEPY, 0);
       Draw_Line_d(0,127);
-      Moveto_d(-18, 0);
+      Moveto_d(STEPY, 0);
       Draw_Line_d(0,-127);
 
-      Moveto_d(-18, 0);
+      Moveto_d(STEPY, 0);
       Draw_Line_d(0,127);
-      Moveto_d(-18, 0);
+      Moveto_d(STEPY, 0);
       Draw_Line_d(0,-127);
 
-      Moveto_d(-18, 0);
+      Moveto_d(STEPY, 0);
       Draw_Line_d(0,127);
+
+
+#define STEPX  -18
+
+      Draw_Line_d(108,0);
+      Moveto_d(0, STEPX);
+      Draw_Line_d(-108,0);
+      Moveto_d(0, STEPX);
+      Draw_Line_d(108,0);
+
+      Moveto_d(0, STEPX);
+      Draw_Line_d(-108,0);
+      Moveto_d(0, STEPX);
+      Draw_Line_d(108,0);
+
+      Moveto_d(0, STEPX);
+      Draw_Line_d(-108,0);
+      Moveto_d(0, STEPX);
+      Draw_Line_d(108,0);
+
+      Moveto_d(0, STEPX);
+      Draw_Line_d(-108,0);
+      //Moveto_d(0, STEPX);
+      //Draw_Line_d(108,0);
+
+
     }
 
 
@@ -273,13 +302,13 @@ int main(void)
     ball_y = ball_y + n;
 
 
-    if (ball_x>=EDGE)
+    if (ball_x>=EDGE-10)
     { 
       ball_x = ball_x - xs;
       xs = -xs;
     }
 
-    if (ball_x<=-EDGE) 
+    if (ball_x<=-EDGE+10) 
     {
       ball_x = ball_x - xs;
       xs = -xs;
