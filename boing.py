@@ -69,20 +69,17 @@ def drawLongitude():
     #latDeg = 0
     seg = 0
 
+    print ("const signed char long" + str(seg) + "[] = {")
+    print ("55,")
+
+    negF = 1
+
     for latDeg in np.arange(sLat, 180.0, sLat ):
     #for latDeg in np.arange(12.0, 13.0, sLat ):
 
-    #latDeg = 45
+        #latDeg = 45
 
-        print ("const signed char seg" + str(seg) + "[] = {")
-        print ("7,")
         for deg in np.arange(0.0, (180.001-sLong), sLong):
-            # ty = cos(deg+sLat) * radius
-            # by = cos(deg) * radius
-            # tx1 = cos(latDeg) * (radius * sin(deg + sLong))
-            # bx1 = cos(latDeg) * (radius * sin(deg))
-
-            #print (deg, latDeg)
             x1 = cos(latDeg) * (radius * sin(deg))
             y1 = cos(deg) * radius
             
@@ -92,13 +89,15 @@ def drawLongitude():
             dx = (x2 - x1)
             dy = (y2 - y1)
 
-            print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )  # Full globe if using 360
+            print(str(int(dy * negF)) +  ",", str(int(dx * aspectConst)) + "," )
 
-        print ("};")
-        seg = seg + 1
+        negF = -negF
+
+    seg = seg + 1
+    print ("};")
 
 
 
-drawCircumference()
+#drawCircumference()
 drawLongitude()
-drawLatitude()
+#drawLatitude()

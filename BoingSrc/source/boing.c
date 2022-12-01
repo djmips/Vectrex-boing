@@ -113,106 +113,45 @@ int main(void)
     #define YADD 80
 
     ball_y_move = (ball_y +  YADD);
-
     //ball_y_move = YADD; //(ball_y +  YADD);
     //ball_x = 0;
+
     // DRAW BALL
     if (1)
     {
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)ball0);
+      if (1)
+      {
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        VIA_t1_cnt_lo = _SCALE;
+        cDraw_VLc((void*)ball0);
+      }
+
+      if (1)
+      {
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        VIA_t1_cnt_lo = _SCALE;
+        cDraw_VLc((void*)long0);
+      }
 
 
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg0);
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg1);
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg2);
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg3);
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg4);
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg5);
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      VIA_t1_cnt_lo = _SCALE;
-      cDraw_VLc((void*)seg6);
+      if (1)
+      {
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        Moveto_d(-54, -64);
+        Draw_Line_d(0,127);
+      }
 
-
-      Reset0Ref();
-      VIA_t1_cnt_lo = MOVE_SCALE;
-      Moveto_d((ball_y_move), ball_x);      /* position ball */
-      
-      Intensity_a(0x4F);
-
-      //Moveto_d(-7, 45);      /* position ball */
-      //cDraw_VLc((void*)latSeg0);
-      //Moveto_d(-45, -53);      /* position ball */
-      VIA_t1_cnt_lo = 120;   // Set scale to 120
-      Moveto_d(-54, -64);      /* position ball */
-      Draw_Line_d(0,127);
-
-
-      //Draw_Line_d(0,127);
-
-      //cDraw_VLc((void*)latSeg3);
-
-      // Reset0Ref();
-      // VIA_t1_cnt_lo = MOVE_SCALE;
-      // Moveto_d((ball_y_move), ball_x);      /* position ball */
-      // VIA_t1_cnt_lo = _SCALE;
-      // cDraw_VLc((void*)latSeg1);
-      // Reset0Ref();
-      // VIA_t1_cnt_lo = MOVE_SCALE;
-      // Moveto_d((ball_y_move), ball_x);      /* position ball */
-      // VIA_t1_cnt_lo = _SCALE;
-      // cDraw_VLc((void*)latSeg2);
-      // Reset0Ref();
-      // VIA_t1_cnt_lo = MOVE_SCALE;
-      // Moveto_d((ball_y_move), ball_x);      /* position ball */
-      // VIA_t1_cnt_lo = _SCALE;
-      // cDraw_VLc((void*)latSeg3);
-      // Reset0Ref();
-      // VIA_t1_cnt_lo = MOVE_SCALE;
-      // Moveto_d((ball_y_move), ball_x);      /* position ball */
-      // VIA_t1_cnt_lo = _SCALE;
-      // cDraw_VLc((void*)latSeg4);
-      // Reset0Ref();
-      // VIA_t1_cnt_lo = MOVE_SCALE;
-      // Moveto_d((ball_y_move), ball_x);      /* position ball */
-      // VIA_t1_cnt_lo = _SCALE;
-      // cDraw_VLc((void*)latSeg5);
-      // Reset0Ref();
-      // VIA_t1_cnt_lo = MOVE_SCALE;
-      // Moveto_d((ball_y_move), ball_x);      /* position ball */
-      // VIA_t1_cnt_lo = _SCALE;
-      // cDraw_VLc((void*)latSeg6);
     }
 
+    if (1)
     {
 
       Intensity_a(0x34);
@@ -297,7 +236,6 @@ int main(void)
     //   ball_y--;
     // }
 
-#if 1
     ball_x = ball_x + xs;
     ball_y = ball_y + n;
 
@@ -330,7 +268,6 @@ int main(void)
         whole = whole + 127;
         n = n - 1;
     }
-#endif
 
     Joy_Digital();                        /* call once per round, to insure */
   } /* while (1) */                    /* joystick information is up to date */
