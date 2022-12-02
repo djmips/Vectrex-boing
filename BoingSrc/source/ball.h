@@ -11,7 +11,6 @@
 
 const signed char ball[] = {
                             15,
--15, 91,
 -43, 77,
 -64, 52,
 -76, 18,
@@ -26,7 +25,8 @@ const signed char ball[] = {
 76, 18,
 64, 52,
 43, 77,
-15, 91
+15, 91,
+-15, 91,
 };
 
 const signed char latSeg0[] = {

@@ -13,7 +13,7 @@ def cos(deg):
 def sin(deg):
     return math.sin(math.radians(deg))
 
-rotAngle = 0
+rotAngle = -22.5
 cosra = cos(rotAngle)
 sinra = sin(rotAngle)
 
@@ -88,24 +88,42 @@ def drawLongitude():
         for latDeg in np.arange((ani + (sLat/2)), (180.0 - sLat/2), sLat ):
 
            
-            for deg in np.arange(0.0, (180.001-sLong), sLong):
-                x1 = cos(latDeg) * (radius * sin(deg))
-                y1 = cos(deg) * radius
-                
-                x2 = cos(latDeg) * (radius * sin(deg + sLong))
-                y2 = cos(deg+sLat) * radius
+            if (negF > 0):
+                for deg in np.arange(0.0, (180.001-sLong), sLong):
+                    x1 = cos(latDeg) * (radius * sin(deg))
+                    y1 = cos(deg) * radius
+                    
+                    x2 = cos(latDeg) * (radius * sin(deg + sLong))
+                    y2 = cos(deg+sLat) * radius
 
-                rx1 = x1 * cosra - y1 * sinra
-                ry1 = x1 * sinra + y1 * cosra
+                    rx1 = x1 * cosra - y1 * sinra
+                    ry1 = x1 * sinra + y1 * cosra
 
-                rx2 = x2 * cosra - y2 * sinra
-                ry2 = x2 * sinra + y2 * cosra
+                    rx2 = x2 * cosra - y2 * sinra
+                    ry2 = x2 * sinra + y2 * cosra
 
+                    dx = (rx2 - rx1)
+                    dy = (ry2 - ry1)
 
-                dx = (rx2 - rx1)
-                dy = (ry2 - ry1)
+                    print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
+            else:
+                for deg in np.arange((180 - sLong),-0.001 , -sLong):
+                    x1 = cos(latDeg) * (radius * sin(deg))
+                    y1 = cos(deg) * radius
+                    
+                    x2 = cos(latDeg) * (radius * sin(deg + sLong))
+                    y2 = cos(deg+sLat) * radius
 
-                print(str(int(dy * negF)) +  ",", str(int(dx * aspectConst)) + "," )
+                    rx1 = x1 * cosra - y1 * sinra
+                    ry1 = x1 * sinra + y1 * cosra
+
+                    rx2 = x2 * cosra - y2 * sinra
+                    ry2 = x2 * sinra + y2 * cosra
+
+                    dx = (rx1 - rx2)
+                    dy = (ry1 - ry2)
+
+                    print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
 
             negF = -negF
 
@@ -114,6 +132,6 @@ def drawLongitude():
 
 
 
-#drawCircumference()
+drawCircumference()
 #drawLatitude()
-drawLongitude()
+#drawLongitude()

@@ -142,7 +142,7 @@ int main(void)
 
 
       // Equator (hard coded)
-      if (1)
+      if (0)
       {
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
@@ -191,7 +191,9 @@ int main(void)
 
 
 #define STEPX  -18
-
+      Reset0Ref();
+      Moveto_d(-55, 64);
+      VIA_t1_cnt_lo = 248;  // scale
       Draw_Line_d(108,0);
       Moveto_d(0, STEPX);
       Draw_Line_d(-108,0);
@@ -240,13 +242,13 @@ int main(void)
     ball_y = ball_y + n;
 
 
-    if (ball_x>=EDGE-10)
+    if (ball_x>=EDGE+10)
     { 
       ball_x = ball_x - xs;
       xs = -xs;
     }
 
-    if (ball_x<=-EDGE+10) 
+    if (ball_x<=-EDGE+40) 
     {
       ball_x = ball_x - xs;
       xs = -xs;
