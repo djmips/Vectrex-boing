@@ -13,22 +13,33 @@ def cos(deg):
 def sin(deg):
     return math.sin(math.radians(deg))
 
+rotAngle = 0
+cosra = cos(rotAngle)
+sinra = sin(rotAngle)
+
 def drawCircumference():
 
     x1 = 0
     y1 = radius
 
+    rx1 = x1 * cosra - y1 * sinra
+    ry1 = x1 * sinra + y1 * cosra
+
     for deg in np.arange (0.0,360.0,sLong):
         x2 = sin(deg + sLong) * radius
         y2 = cos(deg + sLong) * radius
-
-        dx = (x2 - x1)
-        dy = (y2 - y1)
+      
+        # rotate
+        rx2 = x2 * cosra - y2 * sinra
+        ry2 = x2 * sinra + y2 * cosra
+        
+        dx = (rx2 - rx1)
+        dy = (ry2 - ry1)
 
         print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )  # Full globe if using 360
 
-        x1 = x2
-        y1 = y2
+        rx1 = rx2
+        ry1 = ry2
 
 def drawLatitude():
 
@@ -76,6 +87,7 @@ def drawLongitude():
 
         for latDeg in np.arange((ani + (sLat/2)), (180.0 - sLat/2), sLat ):
 
+           
             for deg in np.arange(0.0, (180.001-sLong), sLong):
                 x1 = cos(latDeg) * (radius * sin(deg))
                 y1 = cos(deg) * radius
@@ -83,8 +95,15 @@ def drawLongitude():
                 x2 = cos(latDeg) * (radius * sin(deg + sLong))
                 y2 = cos(deg+sLat) * radius
 
-                dx = (x2 - x1)
-                dy = (y2 - y1)
+                rx1 = x1 * cosra - y1 * sinra
+                ry1 = x1 * sinra + y1 * cosra
+
+                rx2 = x2 * cosra - y2 * sinra
+                ry2 = x2 * sinra + y2 * cosra
+
+
+                dx = (rx2 - rx1)
+                dy = (ry2 - ry1)
 
                 print(str(int(dy * negF)) +  ",", str(int(dx * aspectConst)) + "," )
 
@@ -96,5 +115,5 @@ def drawLongitude():
 
 
 #drawCircumference()
-drawLongitude()
 #drawLatitude()
+drawLongitude()

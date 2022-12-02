@@ -119,6 +119,7 @@ int main(void)
     // DRAW BALL
     if (1)
     {
+      // Circumference
       if (1)
       {
         Reset0Ref();
@@ -128,16 +129,19 @@ int main(void)
         cDraw_VLc((void*)ball);
       }
 
+      // Longitude
       if (1)
       {
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
         VIA_t1_cnt_lo = _SCALE;
+        //Moveto_d(-15, 91);
         cDraw_VLc((void*)(anim[anim_state]));
       }
 
 
+      // Equator (hard coded)
       if (1)
       {
         Reset0Ref();
@@ -151,6 +155,7 @@ int main(void)
 
     }
 
+    // Grid
     if (1)
     {
 
