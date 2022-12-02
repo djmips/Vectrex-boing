@@ -142,15 +142,15 @@ int main(void)
 
 
       // Equator (hard coded)
-      if (0)
+      if (1)
       {
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
         Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
-        Moveto_d(-54, -64);
-        Draw_Line_d(0,127);
+        Moveto_d(-28, -84);
+        Draw_Line_d(-42,120);
       }
 
     }
