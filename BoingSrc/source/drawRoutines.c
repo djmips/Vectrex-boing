@@ -5,7 +5,7 @@
 // the "not very optimized" assembler include!
 // (-O3 and no_frame_pointer)
 void cDraw_synced_list(
-signed char *u,
+const signed char *u,
 signed int y,
 signed int x,
 unsigned int scaleMove,
@@ -97,7 +97,7 @@ unsigned int scaleList)
 	} while (*u != 2);
 }
 
-void cMov_Draw_VLc_a(signed char *vList)
+void cMov_Draw_VLc_a(const signed char *vList)
 {
 	register int count = *(vList)-1;	// count in list
 	dp_VIA_port_a = *(1+vList);	// y pos to dac
@@ -122,16 +122,16 @@ void cMov_Draw_VLc_a(signed char *vList)
 		dp_VIA_shift_reg = 0;			// output full blank
 	} while (--count >=0);			// loop thru all vectors
 }
-void cDraw_VLc(signed char *vList)
+void cDraw_VLc(const signed char *vList)
 {
 	register int count = *(vList++);	// count in list
 	do 
 	{
 		dp_VIA_port_a = *(vList);	// first y coordinate to dac
 		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
-		dp_VIA_port_b = 1;				// mux disable, dac only to x
+		dp_VIA_port_b++;				// mux disable, dac only to x
 		dp_VIA_port_a = *(vList+1);	// dac -> x
-		dp_VIA_shift_reg = 0xff; // full "unblank" output
+		dp_VIA_shift_reg = (unsigned int)0xff; // full "unblank" output
 		dp_VIA_t1_cnt_hi = 0;			// start timer
 		vList+=2;
 		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes
@@ -142,7 +142,7 @@ void cDraw_VLc(signed char *vList)
 // >1 = draw
 // 1 = end
 // (-O3 and no_frame_pointer)
-void cDraw_VL_mode(signed char *u)
+void cDraw_VL_mode(const signed char *u)
 {
 	while (1)
 	{

@@ -97,7 +97,7 @@ int main(void)
   ball_x = 0;
   ball_y = 10;
   ball_y_move = 0;
-  n = -2;
+  n = -1;
   xs = -1;
   anim_state = 0;
   setup();                            /* setup our program */
@@ -260,7 +260,7 @@ int main(void)
     if (ball_y<=-BOT) 
     {
       ball_y = -BOT;
-      whole = 127;
+      whole = 80;
       n = 4;
     }
 
