@@ -30,6 +30,17 @@
  */
 unsigned char *current_song;
 
+//$07,$80,$00,$02
+unsigned char bounce_sound_data[4] = {0x07,0x80,0x00,0x02};
+
+inline static void bounce_sound()
+{
+  //DP_to_C8();
+  Vec_Expl_Flag = 255;
+  //DP_to_D0();
+}
+
+
 /*
  * If you declare a function 'static inline' it is pretty much sure that
  * the compiler will inline it completely, the function will not
@@ -47,9 +58,10 @@ unsigned char *current_song;
 static inline void start_one_vectrex_round(void)
 {
   DP_to_C8();                        /* vectrex internal... dp must point */
+  Explosion_Snd(bounce_sound_data);
   //Init_Music_chk(current_song);    /* to c800, could make a function which */
   Wait_Recal();                       /* sets this up allright... */
-  //Do_Sound();
+  Do_Sound();
 }
 
 /*
@@ -136,7 +148,6 @@ int main(void)
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
         VIA_t1_cnt_lo = _SCALE;
-        //Moveto_d(-15, 91);
         cDraw_VLc((void*)(anim[anim_state]));
       }
 
@@ -246,12 +257,14 @@ int main(void)
     { 
       ball_x = ball_x - xs;
       xs = -xs;
+      bounce_sound();
     }
 
     if (ball_x<=-EDGE+40) 
     {
       ball_x = ball_x - xs;
       xs = -xs;
+      bounce_sound();
     } 
 
 
@@ -262,6 +275,7 @@ int main(void)
       ball_y = -BOT;
       whole = 80;
       n = 4;
+      bounce_sound();
     }
 
     whole = whole - frac;
