@@ -43,30 +43,51 @@ def drawCircumference():
 
 def drawLatitude():
 
+    scaledRadius = radius / 3.85
+
     latSeg = 0
 
     for longDeg in np.arange(sLong, 180.0, sLong ):
 
         print ("const signed char latSeg" + str(latSeg) + "[] = {")
+        print ("0,")        
 
         x1 = 0
-        y1 = radius
+        y1 = scaledRadius
 
-        x2 = sin(longDeg) * radius
-        y2 = cos(longDeg) * radius
+        x2 = sin(longDeg) * scaledRadius
+        y2 = cos(longDeg) * scaledRadius
 
-        dx = (x2 - x1)
-        dy = (y2 - y1)
+        rx1 = x1 * cosra - y1 * sinra
+        ry1 = x1 * sinra + y1 * cosra
+
+        rx2 = x2 * cosra - y2 * sinra
+        ry2 = x2 * sinra + y2 * cosra
+
+        dx = (rx2 - rx1)
+        dy = (ry2 - ry1)
+
+        print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
+
+        doffset = (latSeg+1) * 45
+        x1 = sin(longDeg-doffset) * scaledRadius
+        y1 = cos(longDeg-doffset) * scaledRadius
+
+        rx1 = x1 * cosra - y1 * sinra
+        ry1 = x1 * sinra + y1 * cosra
+
+        rx2 = x2 * cosra - y2 * sinra
+        ry2 = x2 * sinra + y2 * cosra
+
+        dx = (rx1 - rx2)
+        dy = (ry1 - ry2)
 
         print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
 
-        x1 = -x2
-        y1 = y2
 
-        dx = (x2 - x1)
-        dy = (y2 - y1)
-
-        print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
+        #dx = (x2 - x1)
+        #dy = (y2 - y1)
+        #print(str(int(dy)) +  ",", str(int(dx * aspectConst)) + "," )
 
         #line(x1,y1, -x1,y1)
 
@@ -132,6 +153,6 @@ def drawLongitude():
 
 
 
-drawCircumference()
-#drawLatitude()
+#drawCircumference()
+drawLatitude()
 #drawLongitude()

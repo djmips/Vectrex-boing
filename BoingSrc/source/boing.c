@@ -160,10 +160,50 @@ int main(void)
         Moveto_d((ball_y_move), ball_x);
         Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
-        Moveto_d(-28, -84);
-        Draw_Line_d(-42,120);
-      }
+        cMov_Draw_VLc_a((void *)latSeg0);
 
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        cMov_Draw_VLc_a((void *)latSeg1);
+
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        cMov_Draw_VLc_a((void *)latSeg2);
+
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        cMov_Draw_VLc_a((void *)latSeg3);
+
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        cMov_Draw_VLc_a((void *)latSeg4);
+
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        cMov_Draw_VLc_a((void *)latSeg5);
+
+        Reset0Ref();
+        VIA_t1_cnt_lo = MOVE_SCALE;
+        Moveto_d((ball_y_move), ball_x);
+        Intensity_a(0x4F);
+        VIA_t1_cnt_lo = 120;   // Set scale to 120
+        cMov_Draw_VLc_a((void *)latSeg6);
+      }
     }
 
     // Grid
@@ -302,7 +342,7 @@ int main(void)
         anim_state = MAX_ANIM-1;
 
 
-    Joy_Digital();                        /* call once per round, to insure */
+    //Joy_Digital();                        /* call once per round, to insure */
   } /* while (1) */                    /* joystick information is up to date */
 }
 

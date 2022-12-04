@@ -29,38 +29,8 @@ const signed char ball[] = {
 -15, 91,
 };
 
-const signed char latSeg0[] = {
-0,
-0, -92,
-};
 
-// const signed char latSeg1[] = {
-// -58, 169,
-// 0, 339,
-// };
-// const signed char latSeg2[] = {
-// -123, 221,
-// 0, 443,
-// };
-const signed char latSeg3[] = {
-// -200, 240,
- 0,
- 0, 127,
- 0, 120,
- };
-// const signed char latSeg4[] = {
-// -276, 221,
-// 0, 443,
-// };
-// const signed char latSeg5[] = {
-// -341, 169,
-// 0, 339,
-// };
-// const signed char latSeg6[] = {
-// -384, 91,
-// 0, 183,
-// };
-
+#include "lat.h"
 #include "long.h"
 
 const signed char *anim[MAX_ANIM] = {
