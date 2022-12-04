@@ -40,7 +40,7 @@ const struct cartridge_t game_header __attribute__((section(".cartridge"), used)
 	.title_width 	= 80,
 	.title_y 		= -16,
 	.title_x 		= -72,
-	.title 			= "GALLOWAY\x80"	// note that \x00 is automatically appended!
+	.title 			= "VECTOR BOING\x80"	// note that \x00 is automatically appended!
 };
 
 // ***************************************************************************

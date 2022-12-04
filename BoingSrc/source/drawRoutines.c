@@ -4,12 +4,33 @@
 // it is actually FASTER than
 // the "not very optimized" assembler include!
 // (-O3 and no_frame_pointer)
+
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+//U = address of vectorlist
+//X = (y,x) position of vectorlist (this will be point 0,0), positioning on screen
+//scaleMove = scalefactor "Move" (after sync)
+//scaleDraw = scalefactor "Draw" (vectors in vectorlist)
+//
+//     mode, rel y, rel x,                                             
+//     mode, rel y, rel x,                                             
+//     .      .      .                                                
+//     .      .      .                                                
+//     mode, rel y, rel x,                                             
+//     0x02
+// where mode has the following meaning:         
+// negative: draw line                    
+// 0:        move to specified endpoint                              
+// 1:        sync (and move to list start and than to place in vectorlist)      
+// 2:        end
+//;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 void cDraw_synced_list(
 const signed char *u,
 signed int y,
 signed int x,
 unsigned int scaleMove,
-unsigned int scaleList)
+unsigned int scaleDraw)
 {
 	#define ZERO_DELAY 5
 	
@@ -30,15 +51,15 @@ unsigned int scaleList)
 		
 		// move to "location"
 		dp_VIA_port_a = y;			// y pos to dac
-		dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 		dp_VIA_port_b = 0;			// mux enable, dac to -> integrator y (and x)
+		dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 		dp_VIA_port_b = 1;			// mux disable, dac only to x
 		dp_VIA_port_a = x;			// dac -> x
 		dp_VIA_t1_cnt_hi=0;		// start timer
 		
 		// this can be done before the wait loop
 		// since it only fills the latch, not the actual timer!
-		dp_VIA_t1_cnt_lo = scaleList;
+		dp_VIA_t1_cnt_lo = scaleDraw;
 		u+=3;
 		
 		// moveing test for yx== 0 into the move delay
@@ -48,8 +69,8 @@ unsigned int scaleList)
 			
 			// internal moveTo
 			dp_VIA_port_a = *(u-2);	// y pos to dac
-			dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 			dp_VIA_port_b = 0;			// mux enable, dac to -> integrator y (and x)
+			dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 			dp_VIA_port_b = 1;			// mux disable, dac only to x
 			dp_VIA_port_a = *(u-1);	// dac -> x
 			dp_VIA_t1_cnt_hi=0;		// start timer
@@ -80,8 +101,8 @@ unsigned int scaleList)
 				{
 					// internal moveTo
 					dp_VIA_port_a = *(1+u);	// y pos to dac
-					dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 					dp_VIA_port_b = 0;			// mux enable, dac to -> integrator y (and x)
+					dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 					dp_VIA_port_b =1 ;			// mux disable, dac only to x
 					dp_VIA_port_a = *(2+u);	// dac -> x
 					dp_VIA_t1_cnt_hi=0;		// start timer
@@ -101,8 +122,8 @@ void cMov_Draw_VLc_a(const signed char *vList)
 {
 	register int count = *(vList)-1;	// count in list
 	dp_VIA_port_a = *(1+vList);	// y pos to dac
-	dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 	dp_VIA_port_b = 0;			// mux enable, dac to -> integrator y (and x)
+	dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 	dp_VIA_port_b = 1;			// mux disable, dac only to x
 	dp_VIA_port_a = *(2+vList);	// dac -> x
 	dp_VIA_t1_cnt_hi=0;		// start timer
@@ -122,6 +143,7 @@ void cMov_Draw_VLc_a(const signed char *vList)
 		dp_VIA_shift_reg = 0;			// output full blank
 	} while (--count >=0);			// loop thru all vectors
 }
+
 void cDraw_VLc(const signed char *vList)
 {
 	register int count = *(vList++);	// count in list
@@ -162,8 +184,8 @@ void cDraw_VL_mode(const signed char *u)
 		{
 			// internal moveTo
 			dp_VIA_port_a = *(1+u);	// y pos to dac
-			dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 			dp_VIA_port_b = 0;		// mux enable, dac to -> integrator y (and x)
+			dp_VIA_cntl = 0xce;	// disable zero, disable all blank
 			dp_VIA_port_b =1 ;		// mux disable, dac only to x
 			dp_VIA_port_a = *(2+u);	// dac -> x
 			dp_VIA_t1_cnt_hi=0;		// start timer
