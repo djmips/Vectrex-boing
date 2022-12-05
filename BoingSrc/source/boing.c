@@ -152,7 +152,7 @@ int main(void)
       }
 
 
-      // Equator (hard coded)
+      // Latitude
       if (1)
       {
         Reset0Ref();

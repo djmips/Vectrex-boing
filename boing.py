@@ -59,7 +59,7 @@ def drawLatitude():
     
     with open(latfile, 'w') as f:
 
-        scaledRadius = radius / 3.85
+        scaledRadius = radius / 3.82
 
         latSeg = 0
 

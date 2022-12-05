@@ -5,31 +5,31 @@ const signed char latSeg0[] = {
 };
 const signed char latSeg1[] = {
 0,
--30, 35,
-30, -85,
+-31, 35,
+31, -86,
 };
 const signed char latSeg2[] = {
 0,
--52, 40,
-40, -112,
+-53, 40,
+40, -113,
 };
 const signed char latSeg3[] = {
 0,
--74, 35,
-43, -121,
+-75, 35,
+44, -122,
 };
 const signed char latSeg4[] = {
 0,
 -93, 21,
-40, -112,
+40, -113,
 };
 const signed char latSeg5[] = {
 0,
--105, 0,
-30, -85,
+-106, 0,
+31, -86,
 };
 const signed char latSeg6[] = {
 0,
--109, -25,
+-110, -25,
 16, -46,
 };
