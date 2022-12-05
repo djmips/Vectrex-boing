@@ -118,10 +118,7 @@ int main(void)
   {
     start_one_vectrex_round();        /* start 'de round */
     Intensity_a(MAX_BRIGHTNESS/2);          /* set some brightness */
-    //VIA_t1_cnt_lo = MAX_SCALE;               /* set scale factor */
-    //Print_Str_d(100,-128, "JOYSTICK 1 TO MOVE BALL!\x80"); /* a message! */
 
-    //cDraw_VLc((void*)(ball[anim_state])); /* draw the current ball */
     #define YADD 80
 
     ball_y_move = (ball_y +  YADD);
@@ -151,56 +148,49 @@ int main(void)
         cDraw_VLc((void*)(anim[anim_state]));
       }
 
-
       // Latitude
       if (1)
       {
+        Intensity_a(MAX_BRIGHTNESS/2);  
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg0);
 
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg1);
 
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg2);
 
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg3);
 
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg4);
 
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg5);
 
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
         Moveto_d((ball_y_move), ball_x);
-        Intensity_a(0x4F);
         VIA_t1_cnt_lo = 120;   // Set scale to 120
         cMov_Draw_VLc_a((void *)latSeg6);
       }
@@ -209,17 +199,11 @@ int main(void)
     // Grid
     if (1)
     {
-
       Intensity_a(0x34);
-
       Reset0Ref();
       VIA_t1_cnt_lo = MOVE_SCALE;
       Moveto_d(90, -108);
-      //Moveto_d(-7, 45);
-      //cDraw_VLc((void*)latSeg0);
-      //Moveto_d(-45, -53);
       VIA_t1_cnt_lo = 248;  // scale
-      //Moveto_d(-54, -64);
       Draw_Line_d(0,127);
 
 #define STEPY -18
@@ -263,35 +247,13 @@ int main(void)
 
       Moveto_d(0, STEPX);
       Draw_Line_d(-108,0);
-      //Moveto_d(0, STEPX);
-      //Draw_Line_d(108,0);
-
-
     }
 
-    // if (!Vec_Music_Flag)    /* music finished? */
-    //    play_song((void*)&Vec_Music_4);     /* if so ... restart */
-
-    // if (joystick_1_x()>0)                /* check the joystick and */
-    // {                                 /* update position */
-    //   ball_x++;
-    // }
-    // else if (joystick_1_x()<0)
-    // {
-    //   ball_x--;
-    // }
-    // if (joystick_1_y()>0)
-    // {
-    //   ball_y++;
-    // }
-    // else if (joystick_1_y()<0)
-    // {
-    //   ball_y--;
-    // }
-
-    ball_x = ball_x + xs;
-    ball_y = ball_y + n;
-
+    if (!(button_1_1_pressed()))
+    {
+      ball_x = ball_x + xs;
+      ball_y = ball_y + n;
+    }
 
     if (ball_x>=EDGE+10)
     { 
@@ -306,7 +268,6 @@ int main(void)
       xs = -xs;
       bounce_sound();
     } 
-
 
     if (ball_y>=BOT) ball_y = BOT;
 
@@ -325,7 +286,6 @@ int main(void)
         n = n - 1;
     }
 
-
     if (xs > 0)
     {
       anim_state++;
@@ -341,8 +301,7 @@ int main(void)
     if (anim_state < 0)
         anim_state = MAX_ANIM-1;
 
-
-    //Joy_Digital();                        /* call once per round, to insure */
+    check_buttons();
   } /* while (1) */                    /* joystick information is up to date */
 }
 

@@ -37,10 +37,10 @@ const struct cartridge_t game_header __attribute__((section(".cartridge"), used)
 	.copyright 		= "g GCE 2022\x80",	// change year if neccessary, do not change "g GCE"
 	.music 			= &Vec_Music_1,		// taken from included headers
 	.title_height 	= -8,
-	.title_width 	= 80,
-	.title_y 		= -16,
-	.title_x 		= -72,
-	.title 			= "VECTOR BOING\x80"	// note that \x00 is automatically appended!
+	.title_width 	= 120,
+	.title_y 		= 32,
+	.title_x 		= -106,
+	.title 			= "VECTOR BOING\x80\xF8\x40\xF0\xA5 BY DAVID GALLOWAY\x80"	// note that \x00 is automatically appended!
 };
 
 // ***************************************************************************

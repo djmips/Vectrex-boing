@@ -6,7 +6,7 @@ sLat = 180/8
 sLong = 180/8
 radius = 220.0
 
-aspectConst = 1.15
+aspectConst = 1.12
 
 def cos(deg):
     return math.cos(math.radians(deg))
@@ -14,7 +14,7 @@ def cos(deg):
 def sin(deg):
     return math.sin(math.radians(deg))
 
-rotAngle = -22.5
+rotAngle = -16
 cosra = cos(rotAngle)
 sinra = sin(rotAngle)
 
