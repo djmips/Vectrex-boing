@@ -4,9 +4,9 @@ from pathlib import Path
 
 sLat = 180/8
 sLong = 180/8
-radius = 200.0
+radius = 220.0
 
-aspectConst = 1.2
+aspectConst = 1.15
 
 def cos(deg):
     return math.cos(math.radians(deg))
