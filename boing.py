@@ -5,8 +5,9 @@ from pathlib import Path
 sLat = 180/8
 sLong = 180/8
 radius = 220.0
+rotAngle = -20
+aspectConst = 1.15
 
-aspectConst = 1.12
 
 def cos(deg):
     return math.cos(math.radians(deg))
@@ -14,17 +15,91 @@ def cos(deg):
 def sin(deg):
     return math.sin(math.radians(deg))
 
-rotAngle = -16
 cosra = cos(rotAngle)
 sinra = sin(rotAngle)
 
 data_folder = Path("BoingSrc/source/")
 
-def drawCircumference():
+def drawGrid():
 
-    latfile = data_folder / "circ.h"
+    latfile = data_folder / "grid.h"
     
     with open(latfile, 'w') as f:
+
+        latSeg = 0
+
+        #   VIA_t1_cnt_lo = MOVE_SCALE;
+        ##   Moveto_d(90, -108);
+        stepy = -18
+#        for x in range(0, 6, 1):
+            #print(, file=f )   # print out move command of stepy
+            #print(, file=f )   # print draw command of 0, 127
+            #print(, file=f )   # print out move command of stepy
+
+
+# // Grid
+# if (1)
+# {
+#   Intensity_a(0x34);
+#   Reset0Ref();
+#   VIA_t1_cnt_lo = MOVE_SCALE;
+#   Moveto_d(90, -108);
+#   VIA_t1_cnt_lo = 248;  // scale
+
+# #define STEPY -18
+
+#       Draw_Line_d(0,127);
+
+#       Moveto_d(STEPY, 0);
+#       Draw_Line_d(0,-127);
+
+#       Moveto_d(STEPY, 0);
+#       Draw_Line_d(0,127);
+
+#       Moveto_d(STEPY, 0);
+#       Draw_Line_d(0,-127);
+
+#       Moveto_d(STEPY, 0);
+#       Draw_Line_d(0,127);
+
+#       Moveto_d(STEPY, 0);
+#       Draw_Line_d(0,-127);
+
+#       Moveto_d(STEPY, 0);
+#       Draw_Line_d(0,127);
+
+
+# #define STEPX  -18
+#       Reset0Ref();
+#       Moveto_d(-55, 64);
+#       VIA_t1_cnt_lo = 248;  // scale
+#       Draw_Line_d(108,0);
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(-108,0);
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(108,0);
+
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(-108,0);
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(108,0);
+
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(-108,0);
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(108,0);
+
+#       Moveto_d(0, STEPX);
+#       Draw_Line_d(-108,0);
+#     }
+
+
+
+def drawCircumference():
+
+    circfile = data_folder / "circ.h"
+    
+    with open(circfile, 'w') as f:
 
         print ("const signed char ball[] = {", file=f)
         print ("15,", file=f)
@@ -92,8 +167,8 @@ def drawLatitude():
             rx1 = x1 * cosra - y1 * sinra
             ry1 = x1 * sinra + y1 * cosra
 
-            rx2 = x2 * cosra - y2 * sinra
-            ry2 = x2 * sinra + y2 * cosra
+            #rx2 = x2 * cosra - y2 * sinra
+            #ry2 = x2 * sinra + y2 * cosra
 
             dx = (rx1 - rx2)
             dy = (ry1 - ry2)
@@ -105,12 +180,11 @@ def drawLatitude():
 
 def drawLongitude():
 
-    #latDeg = 0
     seg = 0
 
-    latfile = data_folder / "long.h"
+    longfile = data_folder / "long.h"
     
-    with open(latfile, 'w') as f:
+    with open(longfile, 'w') as f:
 
         for ani in range(0, 22, 2):
 
