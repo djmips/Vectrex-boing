@@ -13,9 +13,11 @@ var tlen = 0;
 
 var circleTab = [];
 
-var zbuffer;
+var rotAngle = 0;
+var cosra = cos(rotAngle);
+var sinra = sin(rotAngle);
 
-frameRate(50);
+frameRate(20);
 
 var pic = createGraphics(400, 400, JAVA2D);
 
@@ -48,17 +50,6 @@ var perpdot = function(a, b) {
 //debug(dd);
 //debug(v1.z);
     
-var ipoint = function(x,y,debug)
-{
-    var xb = x; // + 30;
-    var yb = y; // + 31;
-    
-    var zval = zbuffer[yb*400*4 + xb*4];
-    if (zval===0)
-    {
-        point(x,y);
-    }
-};
 
 var drawLine = function(x1, y1, x2, y2, debug)
 {
@@ -232,7 +223,6 @@ var createCircleTable = function() {
         var y2 = cos(deg + sLong) * radius;
 
         fillCircleTable(x1, y1, x2,y2);
-        line(x1, y1, x2,y2);
 
         x1 = x2;
         y1 = y2;
@@ -246,10 +236,10 @@ var createCircleTable = function() {
 var drawGrid = function(size) {
 
     translate (30,30);
-    var cx = bx-30;
-    var cy = by-30; 
+    var cx = bx+0;
+    var cy = by-34; 
     
-    stroke(0, 176, 62);
+    stroke(0, 133, 47);
 
     var t;
     var cpos = new PVector(cx,cy);
@@ -288,7 +278,7 @@ var drawGrid = function(size) {
             var bspacey = cy - ypos;
             var index = floor(abs(bspacey));
             var circleX = circleTab[index];
-            line (0, ypos, max(cx-circleX,0),ypos);
+            line (0, ypos, max(cx-circleX-30,0),ypos);
             line (min(circleX+cx,size), ypos, size,ypos);
         }
 
@@ -304,7 +294,7 @@ var drawGrid = function(size) {
 
 };
 
-var drawExterior = function() {
+var drawCircumference = function() {
 
     //stroke(255, 60, 0);
 
@@ -320,7 +310,6 @@ var drawExterior = function() {
 
         cline(tx, ty, bx, by);
         cline(-tx, ty, -bx, by);
-        cline(tx,ty, -tx,ty);
         bx = tx;
         by = ty;
 
@@ -334,25 +323,88 @@ var drawExterior = function() {
 
 };
 
-var drawBall = function( ani ) {
+var drawLatitude = function() {
 
-    //stroke(0, 250, 88);
+    //stroke(255, 60, 0);
+
+    var deg = 0;
+    var index = 1;
+
+    for (deg = sLong; deg < (180.0); deg += sLong)
+    {
+        var x1 = Math.round(sin(deg) * radius);
+        var y1 = Math.round(cos(deg) * radius);
+
+        var x2 = Math.round(sin(deg + index * -45 ) * radius);
+        var y2 = Math.round(cos(deg + index * -45) * radius);
+
+        var rx1 = x1 * cosra - y1 * sinra;
+        var ry1 = x1 * sinra + y1 * cosra;
+
+        var rx2 = x2 * cosra - y2 * sinra;
+        var ry2 = x2 * sinra + y2 * cosra;
+
+        cline(rx1,ry1, rx2,ry2);
+
+        index++;
+    }
+
+};
+
+
+var drawLongitude = function( ani ) {
+
+    //stroke(250, 0, 233);
     
+    //rotate(-22.5);
+    
+    var down = true;
+
     for ( var latDeg = ani + (sLat /2); latDeg < 180- (sLat/2); latDeg += sLat )
     //for ( var latDeg = ani ; latDeg < 180; latDeg += sLat )
     {
-    
-        for (var deg = sLong; deg < (180-sLong); deg += sLong)
+
+        if (down)
         {
-            var ty = cos(deg+sLat) * radius;
-            var by = cos(deg) * radius;
-            var tx1 = cos(latDeg) * (radius * sin(deg + sLong));
-            var bx1 = cos(latDeg) * (radius * sin(deg));
-            var tx2 = cos(latDeg + sLat) * (radius * sin(deg + sLong));
-            var bx2 = cos(latDeg + sLat ) * (radius * sin(deg));
+            for (var deg = 0; deg < 180; deg += sLong)
+            {
+                var x1 = cos(latDeg) * (radius * sin(deg));
+                var y1 = cos(deg) * radius;
     
-            cline(Math.round(tx1), Math.round(ty), Math.round(bx1), Math.round(by));
+                var x2 = cos(latDeg) * (radius * sin(deg + sLong));
+                var y2 = cos(deg+sLat) * radius;
+                
+                var rx1 = x1 * cosra - y1 * sinra;
+                var ry1 = x1 * sinra + y1 * cosra;
+    
+                var rx2 = x2 * cosra - y2 * sinra;
+                var ry2 = x2 * sinra + y2 * cosra;
+    
+                cline(Math.round(rx1), Math.round(ry1), Math.round(rx2), Math.round(ry2));
+                //cline(Math.round(x1), Math.round(y1), Math.round(x2), Math.round(y2));
+            }
         }
+        else
+        {
+            for (var deg = 180; deg > 0; deg -= sLong)
+            {
+                var x1 = cos(latDeg) * (radius * sin(deg));
+                var y1 = cos(deg) * radius;
+    
+                var x2 = cos(latDeg) * (radius * sin(deg + sLong));
+                var y2 = cos(deg+sLat) * radius;
+                
+                var rx1 = x1 * cosra - y1 * sinra;
+                var ry1 = x1 * sinra + y1 * cosra;
+    
+                var rx2 = x2 * cosra - y2 * sinra;
+                var ry2 = x2 * sinra + y2 * cosra;
+    
+                cline(Math.round(rx1), Math.round(ry1), Math.round(rx2), Math.round(ry2));
+            }
+        }
+        
+        down = !down;
     }
 };
 
@@ -373,7 +425,7 @@ var imagePrep = function(x, y) {
 
 //background(0, 0, 0);
 createCircleTable();
-//debug(circleTab);
+//println(circleTab);
 //debug(circleTab[0]);
 //debug(circleTab[90]);
 //for (var xx = 0; xx < 90; xx++) {
@@ -403,20 +455,21 @@ var draw = function() {
     resetMatrix();
 
     //point(bx,by);
-    stroke(235, 17, 68);
+    //stroke(235, 17, 68);
     //ellipse(200,200,110,110);
   
     stroke(29, 133, 66);
     strokeWeight(2);
 
     translate(bx,by);
-    rotate(22.5);
+    //rotate(22.5);
 
-    drawExterior();
+    drawCircumference();
     var ani = Math.trunc(bx*1.5%sLat);
-    drawBall(ani);
     //println(ani);
-    
+    drawLongitude(ani);
+    drawLatitude();
+
     bx = bx + xs;
     if (bx < 90){
         bx = bx - xs;
