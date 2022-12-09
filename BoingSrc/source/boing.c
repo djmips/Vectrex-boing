@@ -119,11 +119,11 @@ int main(void)
     start_one_vectrex_round();        /* start 'de round */
     Intensity_a(MAX_BRIGHTNESS/2);          /* set some brightness */
 
-    #define YADD 80
+    #define YADD 56
 
-    ball_y_move = (ball_y +  YADD);
-    //ball_y_move = YADD; //(ball_y +  YADD);
-    //ball_x = 0;
+    //ball_y_move = (ball_y +  YADD);
+    ball_y_move = YADD; //(ball_y +  YADD);
+    ball_x = 0;
 
     // DRAW BALL
     if (1)
@@ -139,7 +139,7 @@ int main(void)
       }
 
       // Longitude
-      if (1)
+      if (0)
       {
         Reset0Ref();
         VIA_t1_cnt_lo = MOVE_SCALE;
@@ -149,7 +149,7 @@ int main(void)
       }
 
       // Latitude
-      if (1)
+      if (0)
       {
         Intensity_a(MAX_BRIGHTNESS/2);  
         Reset0Ref();
@@ -207,7 +207,7 @@ int main(void)
       Draw_Line_d(0,127);
 
 #define STEPY -18
-
+      // Horizontal lines
       Moveto_d(STEPY, 0);
       Draw_Line_d(0,-127);
 
@@ -224,7 +224,7 @@ int main(void)
       Moveto_d(STEPY, 0);
       Draw_Line_d(0,127);
 
-
+      // Vertical lines
 #define STEPX  -18
       Reset0Ref();
       Moveto_d(-55, 64);

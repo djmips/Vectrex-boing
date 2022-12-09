@@ -5,9 +5,12 @@ from pathlib import Path
 sLat = 180/8
 sLong = 180/8
 radius = 220.0
+gradius = (65 / 2)
 rotAngle = -20
 aspectConst = 1.15
 
+circleTab = [0,] * int(radius*2)
+#rightCircle = [0,] * radius*2
 
 def cos(deg):
     return math.cos(math.radians(deg))
@@ -19,6 +22,71 @@ cosra = cos(rotAngle)
 sinra = sin(rotAngle)
 
 data_folder = Path("BoingSrc/source/")
+
+
+def fillCircleTableSegment(x1, y1, x2, y2):
+
+    x = int(x1)
+    y = int(y1)
+    x2 = int(x2)
+    y2 = int(y2)
+
+    dx = abs(x-x2)
+    dy = abs(y-y2)
+
+    hy = dy
+    hx = dx
+    ddy = 0
+    ddx = 0
+    ix = 1
+    iy = 1
+    
+    if (x1 > x2):
+        ix = -1
+
+    if (y1 > y2):
+        iy = -1
+
+    if (dy > dx):
+        while(hy):
+            circleTab[y] = x
+            ddy = ddy - dx
+    
+            if (ddy < 0):
+                x = x + ix
+                ddy = ddy + dy
+            y = y + iy
+            hy = hy  - 1
+
+    else:
+        while(hx):
+            circleTab[y] = x
+            
+            ddx = ddx - dy
+    
+            if (ddx < 0):
+                y = y + iy
+                ddx = ddx + dx
+            x = x + ix
+            hx = hx - 1
+
+
+def createCircleTable():
+
+    x1 = 0
+    y1 = gradius
+    
+    for deg in np.arange (0.0,90.0,sLong):
+        x2 = sin(deg + sLong) * gradius
+        y2 = cos(deg + sLong) * gradius
+
+        fillCircleTableSegment(x1, y1, x2,y2)
+
+        x1 = x2
+        y1 = y2
+    
+    # Hack
+    circleTab[0]=int(gradius)
 
 def drawGrid():
 
@@ -241,3 +309,6 @@ def drawLongitude():
 drawCircumference()
 drawLatitude()
 drawLongitude()
+createCircleTable()
+
+print (circleTab)
