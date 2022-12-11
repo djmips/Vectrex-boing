@@ -262,7 +262,7 @@ int main(void)
       bounce_sound();
     }
 
-    if (ball_x<=-EDGE+40) 
+    if (ball_x<=-EDGE+30) 
     {
       ball_x = ball_x - xs;
       xs = -xs;
