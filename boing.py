@@ -5,7 +5,7 @@ from pathlib import Path
 sLat = 180/8
 sLong = 180/8
 radius = 220.0
-gradius = (65 / 2)
+gradius = int(65 / 2)
 rotAngle = -20
 aspectConst = 1.15
 
@@ -86,7 +86,16 @@ def createCircleTable():
         y1 = y2
     
     # Hack
-    circleTab[0]=int(gradius)
+    circleTab[0]=gradius
+
+def saveCircleTable():
+    latfile = data_folder / "ctab.h"
+    
+    with open(latfile, 'w') as f:
+        for x in range(0, gradius, 1):
+            print(str(circleTab[x]) + ",") #, file=f )
+        
+
 
 def drawGrid():
 
@@ -312,3 +321,8 @@ drawLongitude()
 createCircleTable()
 
 print (circleTab)
+
+
+saveCircleTable()
+
+print (gradius)

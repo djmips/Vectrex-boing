@@ -105,6 +105,9 @@ int main(void)
   signed char n;  
   signed char xs;
 
+  signed char boxtop;
+  signed char boxbot;
+
   whole = 127;
   ball_x = 0;
   ball_y = 10;
@@ -199,30 +202,108 @@ int main(void)
     // Grid
     if (1)
     {
+
+      boxtop = ball_y + 80 - 16;
+      boxbot = ball_y + 80 + 16;
+
+      int ypos = 0;
+
       Intensity_a(0x34);
       Reset0Ref();
       VIA_t1_cnt_lo = MOVE_SCALE;
       Moveto_d(90, -108);
       VIA_t1_cnt_lo = 248;  // scale
-      Draw_Line_d(0,127);
+
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,127);
+      }
+      else
+      {
+        Moveto_d(0,127);
+      }
 
 #define STEPY -18
+
       // Horizontal lines
       Moveto_d(STEPY, 0);
-      Draw_Line_d(0,-127);
+      ypos += 18;
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,-127);
+      }
+      else
+      {
+        Moveto_d(0,-127);
+      }
 
       Moveto_d(STEPY, 0);
-      Draw_Line_d(0,127);
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,-127);
+      ypos += 18;
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,127);
+      }
+      else
+      {
+        Moveto_d(0,127);
+      }
 
       Moveto_d(STEPY, 0);
-      Draw_Line_d(0,127);
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,-127);
+      ypos += 18;
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,-127);
+      }
+      else
+      {
+        Moveto_d(0,-127);
+      }
 
       Moveto_d(STEPY, 0);
-      Draw_Line_d(0,127);
+      ypos += 18;
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,127);
+      }
+      else
+      {
+        Moveto_d(0,127);
+      }
+
+      Moveto_d(STEPY, 0);
+      ypos += 18;
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,-127);
+      }
+      else
+      {
+        Moveto_d(0,-127);
+      }
+
+      Moveto_d(STEPY, 0);
+      ypos += 18;
+
+
+      if (ypos < boxtop || ypos > boxbot)
+      {
+        Draw_Line_d(0,127);
+      }
+      else
+      {
+        //Moveto_d(0,127);
+      }
+
+      //Moveto_d(STEPY, 0);
+      //ypos += 18;
+
+
 
       // Vertical lines
 #define STEPX  -18
