@@ -20,3 +20,5 @@ void cMov_Draw_VLc_a(signed char *vList);
 void cDraw_VL_mode(signed char *u);
 
 void cDraw_VLc(signed char *vList);
+
+void cDraw_VLcZ(const signed char *vList, signed int y, signed int x, unsigned int scaleMove, unsigned int scaleDraw );

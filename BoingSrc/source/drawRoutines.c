@@ -160,6 +160,86 @@ void cDraw_VLc(const signed char *vList)
 		dp_VIA_shift_reg = 0;			// output full blank
 	} while (--count >=0);			// loop thru all vectors
 }
+
+
+void cDraw_VLcZ(const signed char *vList, signed int y, signed int x, unsigned int scaleMove, unsigned int scaleDraw )
+{
+
+	{
+		dp_VIA_shift_reg = 0;		// all output is BLANK
+		dp_VIA_cntl = 0xcc;	// zero the integrators
+		dp_VIA_port_a = 0;    		// reset integrator offset
+		dp_VIA_port_b = (int)0b10000010;
+		
+		dp_VIA_t1_cnt_lo = scaleMove;
+		// delay, till beam is at zero
+		// volatile - otherwise delay loop does not work with -O
+		for (volatile signed int b=ZERO_DELAY; b>0; b--);
+		dp_VIA_port_b= (int)0b10000011;
+		
+		// move to "location"
+		dp_VIA_port_a = y;			// y pos to dac
+		dp_VIA_port_b = 0;			// mux enable, dac to -> integrator y (and x)
+		dp_VIA_cntl = 0xce;	// disable zero, disable all blank
+		dp_VIA_port_b = 1;			// mux disable, dac only to x
+		dp_VIA_port_a = x;			// dac -> x
+		dp_VIA_t1_cnt_hi=0;		// start timer
+		
+		// this can be done before the wait loop
+		// since it only fills the latch, not the actual timer!
+		dp_VIA_t1_cnt_lo = scaleDraw;
+
+		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes	
+	}
+
+
+	register int count = *(vList++);	// count in list
+	do 
+	{
+		dp_VIA_port_a = *(vList);	// first y coordinate to dac
+		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
+		dp_VIA_port_b++;				// mux disable, dac only to x
+		dp_VIA_port_a = *(vList+1);	// dac -> x
+		dp_VIA_shift_reg = (unsigned int)0xff; // full "unblank" output
+		dp_VIA_t1_cnt_hi = 0;			// start timer
+		vList+=2;
+		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes
+		dp_VIA_shift_reg = 0;			// output full blank
+
+		count--;
+
+		if (((count & (int)0x07) == (int)0x07))
+		{
+		//	dp_VIA_shift_reg = 0;		// all output is BLANK
+			dp_VIA_cntl = 0xcc;	// zero the integrators
+			dp_VIA_port_a = 0;    		// reset integrator offset
+			dp_VIA_port_b = (int)0b10000010;
+			
+			dp_VIA_t1_cnt_lo = scaleMove;
+			// delay, till beam is at zero
+			// volatile - otherwise delay loop does not work with -O
+			for (volatile signed int b=ZERO_DELAY; b>0; b--);
+			dp_VIA_port_b= (int)0b10000011;
+			
+			// move to "location"
+			dp_VIA_port_a = y;			// y pos to dac
+			dp_VIA_port_b = 0;			// mux enable, dac to -> integrator y (and x)
+			dp_VIA_cntl = 0xce;	// disable zero, disable all blank
+			dp_VIA_port_b = 1;			// mux disable, dac only to x
+			dp_VIA_port_a = x;			// dac -> x
+			dp_VIA_t1_cnt_hi=0;		// start timer
+			
+			// this can be done before the wait loop
+			// since it only fills the latch, not the actual timer!
+			dp_VIA_t1_cnt_lo = scaleDraw;
+
+			while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes	
+		}
+
+	} while (count >=0);			// loop thru all vectors
+}
+
+
 // 0 = move
 // >1 = draw
 // 1 = end

@@ -131,21 +131,13 @@ int main(void)
       // Circumference
       if (1)
       {
-        Reset0Ref();
-        VIA_t1_cnt_lo = MOVE_SCALE;
-        Moveto_d((ball_y_move), ball_x);
-        VIA_t1_cnt_lo = _SCALE;
-        cDraw_VLc((void*)ball);
+        cDraw_VLcZ((void*)(ball),ball_y_move, ball_x, MOVE_SCALE, _SCALE);
       }
 
       // Longitude
       if (1)
       {
-        Reset0Ref();
-        VIA_t1_cnt_lo = MOVE_SCALE;
-        Moveto_d((ball_y_move), ball_x);
-        VIA_t1_cnt_lo = _SCALE;
-        cDraw_VLc((void*)(anim[anim_state]));
+        cDraw_VLcZ((void*)(anim[anim_state]),ball_y_move, ball_x, MOVE_SCALE, _SCALE);
       }
 
       // Latitude
