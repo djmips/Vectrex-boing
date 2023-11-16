@@ -1,2 +1,1 @@
-﻿BoingSrc/bin
-BoingSrc/build
+﻿# moved ignored files to subfolders so they should be created and tracked from fresh pull

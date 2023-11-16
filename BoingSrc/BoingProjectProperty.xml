@@ -7,7 +7,7 @@
 		<ProjectName>Boing</ProjectName>
 		<DirectoryName></DirectoryName>
 		<Path>projects</Path>
-		<MainFile>Boing.asm</MainFile>
+		<MainFile>boing.c</MainFile>
 		<Description></Description>
 		<Version>1.0</Version>
 		<Author></Author>
@@ -16,7 +16,7 @@
 		<createGameLoopCode>false</createGameLoopCode>
 		<NumberOfBanks>1</NumberOfBanks>
 		<BankMainFiless>
-			<BankMainFiles>Boing.asm</BankMainFiles>
+			<BankMainFiles>boing.c</BankMainFiles>
 		</BankMainFiless>
 		<Extras>0</Extras>
 		<ProjectPreScriptClass></ProjectPreScriptClass>
