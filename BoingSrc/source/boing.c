@@ -89,6 +89,10 @@ void setup(void)
   Wait_Recal();                       /* sets this up allright... */
 }
 
+static const char wave_heading_text[]	= "MERRY XMAS 2024 \x80";
+#define WAVE_TEXT_X 		18
+#define WAVE_TEXT_Y 		124
+
 /*
  * Our main function we start of here...
  * we should make sure that we never return from here, or vectrex will
@@ -191,6 +195,12 @@ int main(void)
     // Grid
     if (1)
     {
+
+
+	    Reset0Ref();
+
+      Print_Str_d(WAVE_TEXT_Y, -WAVE_TEXT_X, (char *) wave_heading_text);
+
       Intensity_a(0x34);
       Reset0Ref();
       VIA_t1_cnt_lo = MOVE_SCALE;
@@ -198,47 +208,51 @@ int main(void)
       VIA_t1_cnt_lo = 248;  // scale
       Draw_Line_d(0,127);
 
-#define STEPY -18
-
-      Moveto_d(STEPY, 0);
+      Moveto_d(-120, 0);
       Draw_Line_d(0,-127);
 
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,127);
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,-127);
 
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,127);
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,-127);
+//#define STEPY -18
 
-      Moveto_d(STEPY, 0);
-      Draw_Line_d(0,127);
+      // Moveto_d(STEPY, 0);
+      // Draw_Line_d(0,-127);
+
+      // Moveto_d(STEPY, 0);
+      // Draw_Line_d(0,127);
+      // Moveto_d(STEPY, 0);
+      // Draw_Line_d(0,-127);
+
+      // Moveto_d(STEPY, 0);
+      // Draw_Line_d(0,127);
+      // Moveto_d(STEPY, 0);
+      // Draw_Line_d(0,-127);
+
+      // Moveto_d(STEPY, 0);
+      // Draw_Line_d(0,127);
 
 
-#define STEPX  -18
-      Reset0Ref();
-      Moveto_d(-55, 64);
-      VIA_t1_cnt_lo = 248;  // scale
-      Draw_Line_d(108,0);
-      Moveto_d(0, STEPX);
-      Draw_Line_d(-108,0);
-      Moveto_d(0, STEPX);
-      Draw_Line_d(108,0);
+// #define STEPX  -18
+//       Reset0Ref();
+//       Moveto_d(-55, 64);
+//       VIA_t1_cnt_lo = 248;  // scale
+//       Draw_Line_d(108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(-108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(108,0);
 
-      Moveto_d(0, STEPX);
-      Draw_Line_d(-108,0);
-      Moveto_d(0, STEPX);
-      Draw_Line_d(108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(-108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(108,0);
 
-      Moveto_d(0, STEPX);
-      Draw_Line_d(-108,0);
-      Moveto_d(0, STEPX);
-      Draw_Line_d(108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(-108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(108,0);
 
-      Moveto_d(0, STEPX);
-      Draw_Line_d(-108,0);
+//       Moveto_d(0, STEPX);
+//       Draw_Line_d(-108,0);
     }
 
     if (!(button_1_1_pressed()))
