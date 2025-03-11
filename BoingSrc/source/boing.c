@@ -62,6 +62,7 @@ static inline void start_one_vectrex_round(void)
   //Init_Music_chk(current_song);    /* to c800, could make a function which */
   Wait_Recal();                       /* sets this up allright... */
   Do_Sound();
+  check_buttons();
 }
 
 /*
@@ -129,19 +130,19 @@ int main(void)
     if (1)
     {
       // Circumference
-      if (1)
+      if (!(Vec_Btn_State & 0b00000001))
       {
         cDraw_VLcZ((void*)(ball),ball_y_move, ball_x, MOVE_SCALE, _SCALE);
       }
 
       // Longitude
-      if (1)
+      if (!(Vec_Btn_State & 0b00000010))
       {
         cDraw_VLcZ((void*)(anim[anim_state]),ball_y_move, ball_x, MOVE_SCALE, _SCALE);
       }
 
       // Latitude
-      if (1)
+      if (!(Vec_Btn_State & 0b00000100))
       {
         Intensity_a(MAX_BRIGHTNESS/2);  
         Reset0Ref();
@@ -189,7 +190,7 @@ int main(void)
     }
 
     // Grid
-    if (1)
+    if (!(Vec_Btn_State & 0b00001000))
     {
       Intensity_a(0x34);
       Reset0Ref();
@@ -241,7 +242,7 @@ int main(void)
       Draw_Line_d(-108,0);
     }
 
-    if (!(button_1_1_pressed()))
+    if ((Vec_Btn_State &7) != 0b00000010)
     {
       ball_x = ball_x + xs;
       ball_y = ball_y + n;
@@ -265,17 +266,21 @@ int main(void)
 
     if (ball_y<=-BOT) 
     {
-      ball_y = -BOT;
+      //ball_y = -BOT;
       whole = 80;
-      n = 4;
+      ball_y = ball_y - n;
+      n = -n;
       bounce_sound();
     }
 
-    whole = whole - frac;
-    if ( whole < 0 )
+    if ((Vec_Btn_State &7) != 0b00000010)
     {
-        whole = whole + 127;
-        n = n - 1;
+      whole = whole - frac;
+      if ( whole < 0 )
+      {
+          whole = whole + 127;
+          n = n - 1;
+      }
     }
 
     if (xs > 0)
