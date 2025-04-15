@@ -7,6 +7,87 @@
 
 #include "ball.h"
 
+const signed char triangles[] = {
+  19,
+  3,0,
+  -5,3,
+  0,-6,
+  5,3,
+  4,0,
+  -6,2,
+  1,-7,
+  5,4,
+  4,1,
+  -8,1,
+  2,-8,
+  5,6,
+  5,2,
+  -9,0,
+  4,-9,
+  5,8,
+  5,3,
+  -11,0,
+  6,-9,
+  5,10,
+  5,5,
+  -13,-2,
+  8,-10,
+  4,12,
+  6,7,
+  -15,-5,
+  12,-10,
+  3,15,
+  5,9,
+  -16,-8,
+  15,-10,
+  0,18,
+  5,11,
+  -18,-12,
+  20,-9,
+  -2,22,
+  4,14,
+  -18,-18,
+  25,-7,
+  -6,25,
+  2,17,
+  -19,-24,
+  30,-4,
+  -11,28,
+  0,20,
+  -18,-31,
+  36,0,
+  -18,31,
+  -3,24,
+  -15,-39,
+  42,6,
+  -26,33,
+  -8,27,
+  -11,-48,
+  47,14,
+  -36,34,
+  -14,30,
+  -5,-58,
+  53,24,
+  -47,34,
+  -21,33,
+  3,-69,
+  58,37,
+  -61,31,
+  -30,35,
+  15,-79,
+  61,53,
+  -76,26,
+  -41,36,
+  31,-90,
+  62,72,
+  -93,18,
+  -54,35,
+  51,-99,
+  60,94,
+  -112,5,
+  };
+
+
 /*
  * Some defines, Maximal brightness is $7f, highest not set!
  * Max Scale would be $ff, well here we take only $f0!
@@ -105,14 +186,16 @@ int main(void)
   signed char ball_y_move;
   signed char n;  
   signed char xs;
+  unsigned char frame;
 
-  whole = 127;
+  whole = 80;
   ball_x = 0;
   ball_y = 10;
   ball_y_move = 0;
   n = -1;
   xs = -1;
   anim_state = 0;
+  frame = 0;
   setup();                            /* setup our program */
 
   while (1)                        /* never to return... */
@@ -126,8 +209,11 @@ int main(void)
     //ball_y_move = YADD; //(ball_y +  YADD);
     //ball_x = 0;
 
+    //cDraw_VLcTri((void*)(triangles), MOVE_SCALE, _SCALE);
+    cDraw_synced_list((void*)(triangles), MOVE_SCALE, _SCALE);
+
     // DRAW BALL
-    if (1)
+    if (0)
     {
       // Circumference
       if (!(Vec_Btn_State & 0b00000001))
@@ -190,7 +276,7 @@ int main(void)
     }
 
     // Grid
-    if (!(Vec_Btn_State & 0b00001000))
+    if (0) //!(Vec_Btn_State & 0b00001000))
     {
       Intensity_a(0x34);
       Reset0Ref();
@@ -280,16 +366,20 @@ int main(void)
       {
           whole = whole + 127;
           n = n - 1;
+          Moveto_d(0, STEPX);
       }
     }
 
-    if (xs > 0)
+    if (frame & 1)
     {
-      anim_state++;
-    }
-    else
-    {
-       anim_state--;
+        if (xs > 0)
+        {
+          anim_state++;
+        }
+        else
+        {
+           anim_state--;
+        }
     }
 
     if (anim_state >= MAX_ANIM)
@@ -299,6 +389,8 @@ int main(void)
         anim_state = MAX_ANIM-1;
 
     check_buttons();
+
+    frame++;
   } /* while (1) */                    /* joystick information is up to date */
 }
 

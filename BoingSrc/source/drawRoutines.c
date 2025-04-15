@@ -19,9 +19,10 @@
 //     0x02
 // where mode has the following meaning:         
 // negative: draw line                    
-// 0:        move to specified endpoint                              
-// 1:        sync (and move to list start and than to place in vectorlist)      
-// 2:        end
+// $00:        move to specified endpoint     
+// $FF:        draw relative line to specified endpoint
+// $01:        sync (and move to list start and than to place in vectorlist)      
+// $02:        end
 //;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
@@ -239,6 +240,60 @@ void cDraw_VLcZ(const signed char *vList, signed int y, signed int x, unsigned i
 	} while (count >=0);			// loop thru all vectors
 }
 
+void cDraw_VLTri(const signed char *vList, unsigned int scaleMove, unsigned int scaleDraw )
+{
+
+	register int count = *(vList++);	// count of triangles in list
+
+	do 
+	{
+		// move to "location"
+		dp_VIA_port_a = *(vList++);		// y -> dac
+		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
+		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
+		dp_VIA_cntl = 0xce;				// disable zero, disable all blank
+		dp_VIA_port_b = 1;				// mux disable, dac only to x
+		dp_VIA_port_a = *(vList++);		// x -> dac
+
+		// this can be done before the wait loop
+		// since it only fills the latch, not the actual timer!
+		dp_VIA_t1_cnt_lo = scaleDraw;
+
+		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes	
+
+		dp_VIA_port_a = *(vList);		// y -> dac
+		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
+		dp_VIA_port_b++;				// mux disable, dac only to x
+		dp_VIA_port_a = *(vList+1);		// x -> dac
+		dp_VIA_shift_reg = (unsigned int)0xff; // full "unblank" output
+		dp_VIA_t1_cnt_hi = 0;			// start timer
+		vList+=2;
+		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes
+		dp_VIA_shift_reg = 0;			// output full blank
+
+		dp_VIA_port_a = *(vList);		// y -> dac
+		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
+		dp_VIA_port_b++;				// mux disable, dac only to x
+		dp_VIA_port_a = *(vList+1);		// x -> dac
+		dp_VIA_shift_reg = (unsigned int)0xff; // full "unblank" output
+		dp_VIA_t1_cnt_hi = 0;			// start timer
+		vList+=2;
+		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes
+		dp_VIA_shift_reg = 0;			// output full blank
+
+		dp_VIA_port_a = *(vList);		// y coordinate to dac
+		dp_VIA_port_b = 0;				// mux enable, dac to -> integrator y (and x)
+		dp_VIA_port_b++;				// mux disable, dac only to x
+		dp_VIA_port_a = *(vList+1);		// x -> dac
+		dp_VIA_shift_reg = (unsigned int)0xff; // full "unblank" output
+		dp_VIA_t1_cnt_hi = 0;			// start timer
+		vList+=2;
+		while ((dp_VIA_int_flags & 0x40) == 0); // wait till timer finishes
+		dp_VIA_shift_reg = 0;			// output full blank
+
+	} while (--count >=0);	
+
+}
 
 // 0 = move
 // >1 = draw
